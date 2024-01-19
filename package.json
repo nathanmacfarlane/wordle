@@ -24,7 +24,6 @@
   "prisma": {
     "seed": "yarn rw exec seed"
   },
-  "packageManager": "yarn@4.0.2",
   "dependencies": {
     "date-fns": "^3.2.0"
   }
