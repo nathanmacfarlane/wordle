@@ -37,8 +37,5 @@ const deferCollectWord = async () => {
   return { word, response }
 }
 
-export default defer(deferCollectWord, {
-  // retry: 5,
-  // concurrency: 10,
-  // maxDuration: 5 * 60 // in seconds
-})
+// setup cron that runs every day 5 minutes after midnight
+export default defer.cron(deferCollectWord, '5 0 * * *')
