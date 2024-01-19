@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "@defer/redwood": "0.0.1-alpha-20230925010815-2e31db3",
+    "@redwoodjs/auth-clerk-setup": "6.6.2",
     "@redwoodjs/core": "6.6.2"
   },
   "eslintConfig": {
