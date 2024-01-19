@@ -19,10 +19,12 @@
     "@redwoodjs/forms": "6.6.2",
     "@redwoodjs/router": "6.6.2",
     "@redwoodjs/web": "6.6.2",
+    "@uidotdev/usehooks": "2.4.1-experimental.1",
     "framer-motion": "^9",
+    "lucide-react": "^0.312.0",
     "prop-types": "15.8.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react": "0.0.0-experimental-b30030471-20240117",
+    "react-dom": "0.0.0-experimental-b30030471-20240117"
   },
   "devDependencies": {
     "@redwoodjs/vite": "6.6.2",

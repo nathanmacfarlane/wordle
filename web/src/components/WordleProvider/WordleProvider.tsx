@@ -7,7 +7,9 @@ export type WordleProviderProps = {}
 const WordleProvider: React.FC<PropsWithChildren<WordleProviderProps>> = ({
   children,
 }) => {
-  const [guesses, setGuesses] = useState<{ word: string }[]>([])
+  const [guesses, setGuesses] = useState<
+    { word: string; isLocked?: boolean }[]
+  >([])
   const [solution, setSolution] = useState<string>('')
 
   return (

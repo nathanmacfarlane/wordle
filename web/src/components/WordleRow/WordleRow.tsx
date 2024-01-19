@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { HStack } from '@chakra-ui/react'
 
 import WordleCell from '../WordleCell/WordleCell'
@@ -13,11 +15,13 @@ const WordleRow: React.FC<WordleRowProps> = ({
   isLocked,
   solution,
 }) => {
-  const extendedGuess = guess.padEnd(5, ' ')
+  const extendedGuess = useMemo(() => {
+    return guess.padEnd(5, ' ').split('')
+  }, [guess])
 
   return (
     <HStack spacing="1px">
-      {extendedGuess.split('').map((letter, index) => {
+      {extendedGuess.map((letter, index) => {
         const getStatus = () => {
           if (!isLocked) return 'none'
           if (letter === solution[index]) return 'correct'

@@ -13,12 +13,17 @@ const WordleCell: React.FC<WordleCellProps> = ({ value, status }) => {
       ? '#7a7b7e'
       : status === 'misplaced'
       ? '#c6b76a'
-      : '#7a7b7e'
+      : undefined
+
+  const textColor = status === 'none' ? 'black' : ''
+
+  const outline = status === 'none' ? '1px solid #7a7b7e' : undefined
 
   return (
-    <Box w="75px" h="75px" p="1">
+    <Box w="60px" h="60px" p="1">
       <Box
         bg={bg}
+        outline={outline}
         rounded="3px"
         w="full"
         h="full"
@@ -26,7 +31,7 @@ const WordleCell: React.FC<WordleCellProps> = ({ value, status }) => {
         justifyContent="center"
         alignItems="center"
       >
-        <Text fontSize="32px" fontWeight="bold" color="white">
+        <Text fontSize="32px" fontWeight="bold" color={textColor}>
           {value}
         </Text>
       </Box>

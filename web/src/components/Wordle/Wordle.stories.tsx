@@ -1,6 +1,6 @@
 import type { Meta } from '@storybook/react'
 
-import { WordleContext } from '../WordleProvider/WordleContext'
+import WordleProvider from '../WordleProvider/WordleProvider'
 
 import Wordle from './Wordle'
 
@@ -13,19 +13,8 @@ export default meta
 
 export const Primary = () => {
   return (
-    <WordleContext.Provider
-      value={{
-        guesses: [
-          { word: 'slate', isLocked: true },
-          { word: 'style', isLocked: true },
-          { word: 'stol' },
-        ],
-        setGuesses: () => {},
-        solution: 'stole',
-        setSolution: () => {},
-      }}
-    >
+    <WordleProvider>
       <Wordle />
-    </WordleContext.Provider>
+    </WordleProvider>
   )
 }
