@@ -19,3 +19,9 @@
   open = true
 [notifications]
   versionUpdates = ["latest"]
+
+[experimental.cli]
+  autoInstall = true
+
+  [[experimental.cli.plugins]]
+    package = "@defer/redwood"
