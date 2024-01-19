@@ -5,6 +5,7 @@
     "esModuleInterop": true,
     "target": "esnext",
     "module": "esnext",
+    "strict": true,
     "moduleResolution": "node",
     "skipLibCheck": false,
     "baseUrl": "./",
