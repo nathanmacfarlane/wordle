@@ -1,5 +1,6 @@
 import { VStack } from '@chakra-ui/react'
 
+import { useCreateGuess } from 'src/requests/useCreateGuess'
 import { padEnd } from 'src/utils/array'
 
 import VirtualKeyboard from '../VirtualKeyboard/VirtualKeyboard'
@@ -10,6 +11,8 @@ const Wordle = () => {
   const { solution, guesses, setGuesses } = useWordleContext()
 
   const extendedGuesses = padEnd(guesses, 6, '')
+
+  const [createGuess] = useCreateGuess()
 
   const handleKeyPress = (key: string) => {
     const activeGuess = extendedGuesses.find(({ isLocked }) => !isLocked)
@@ -43,6 +46,7 @@ const Wordle = () => {
       const prevGuesses = guesses.filter(({ isLocked }) => isLocked)
       const newGuesses = [...prevGuesses, { word, isLocked: true }]
       setGuesses(newGuesses)
+      createGuess({ variables: { input: { word } } })
     }
 
     if (key === 'ENTER') {

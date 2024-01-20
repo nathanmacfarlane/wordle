@@ -2,6 +2,12 @@ import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
 
 import { logger } from 'src/lib/logger'
 
+type User = {
+  id: string
+  email: string
+  name: string
+}
+
 /**
  * getCurrentUser returns the user information.
  * Once you're ready you can also return a collection of roles
@@ -26,10 +32,20 @@ export const getCurrentUser = async (
     return null
   }
 
-  const { id, ..._rest } = decoded
+  const { id, email, name, ..._rest } = decoded
 
   // Be careful to only return information that should be accessible on the web side.
-  return { id }
+  return { id, email, name }
+}
+
+export const getAuthedUser = (): User => {
+  const user = context.currentUser
+
+  if (!user) {
+    throw new AuthenticationError('You must be logged in to do that.')
+  }
+
+  return user
 }
 
 /**

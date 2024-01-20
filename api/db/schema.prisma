@@ -9,7 +9,31 @@ generator client {
 }
 
 model Solution {
-  id    Int     @id @default(autoincrement())
-  date  DateTime @db.Date
-  word  String
+  id      Int     @id @default(autoincrement())
+  date    DateTime @db.Date
+  word    String
+  guesses Guess[]
+}
+
+model User {
+  id      String @id @default(uuid())
+  name    String
+  email   String  @unique
+  guesses Guess[]
+}
+
+model Guess {
+  id          String @id @default(uuid())
+  word        String
+  nthGuess    Int
+
+  correctCount    Int
+  misplacedCount  Int
+  incorrectCount  Int
+
+  solutionId  Int
+  solution    Solution @relation(fields: [solutionId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
