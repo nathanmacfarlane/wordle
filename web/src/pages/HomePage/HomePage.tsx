@@ -9,6 +9,8 @@ const HomePage = () => {
       <Metadata title="Home" description="Home page" />
 
       <WordleProvider>
+        {/* TODO - make this modal less annoying */}
+        {/* <GameOverModal />  */}
         <Wordle />
       </WordleProvider>
     </>

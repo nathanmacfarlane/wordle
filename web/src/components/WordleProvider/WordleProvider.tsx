@@ -34,9 +34,27 @@ const WordleProvider: React.FC<PropsWithChildren<WordleProviderProps>> = ({
     },
   })
 
+  const hasCorrectSolution = guesses.some(
+    ({ word, isLocked }) => word === solution && isLocked
+  )
+  const failedToday = guesses.length === 6 && !hasCorrectSolution
+
+  const gameStatus = hasCorrectSolution
+    ? 'won'
+    : failedToday
+    ? 'lost'
+    : 'playing'
+
   return (
     <WordleContext.Provider
-      value={{ guesses, setGuesses, solution, setSolution, loadingGuesses }}
+      value={{
+        guesses,
+        setGuesses,
+        solution,
+        setSolution,
+        loadingGuesses,
+        gameStatus,
+      }}
     >
       {children}
     </WordleContext.Provider>

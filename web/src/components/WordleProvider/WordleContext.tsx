@@ -9,6 +9,7 @@ export type WordleContextType = {
   }[]
   setGuesses: (guesses: { word: string }[]) => void
   setSolution: (solution: string) => void
+  gameStatus: 'won' | 'lost' | 'playing'
 }
 
 export const WordleContext = createContext<WordleContextType>({
@@ -17,6 +18,7 @@ export const WordleContext = createContext<WordleContextType>({
   loadingGuesses: false,
   setSolution: () => {},
   setGuesses: () => {},
+  gameStatus: 'playing',
 })
 
 export const useWordleContext = () => {

@@ -8,13 +8,14 @@ import { useWordleContext } from '../WordleProvider/WordleContext'
 import WordleRow from '../WordleRow/WordleRow'
 
 const Wordle = () => {
-  const { solution, guesses, setGuesses } = useWordleContext()
+  const { solution, guesses, setGuesses, gameStatus } = useWordleContext()
 
   const extendedGuesses = padEnd(guesses, 6, '')
 
   const [createGuess] = useCreateGuess()
 
   const handleKeyPress = (key: string) => {
+    if (gameStatus !== 'playing') return
     const activeGuess = extendedGuesses.find(({ isLocked }) => !isLocked)
 
     const addLetterToGuess = (additionalLetter: string) => {
