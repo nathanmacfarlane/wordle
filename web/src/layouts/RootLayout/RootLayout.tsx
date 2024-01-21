@@ -2,6 +2,7 @@ import { Box, HStack, VStack } from '@chakra-ui/react'
 import { UserButton } from '@clerk/clerk-react'
 
 import NavSidebar from 'src/components/NavSidebar/NavSidebar'
+import NavTabs from 'src/components/NavTabs/NavTabs'
 
 type RootLayoutProps = {
   children?: React.ReactNode
@@ -24,6 +25,9 @@ const RootLayout = ({ children }: RootLayoutProps) => {
           {children}
         </Box>
       </HStack>
+      <Box display={{ base: 'block', md: 'none' }} w="100%">
+        <NavTabs />
+      </Box>
     </VStack>
   )
 }
