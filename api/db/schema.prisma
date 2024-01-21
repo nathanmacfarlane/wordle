@@ -20,6 +20,9 @@ model User {
   name    String
   email   String  @unique
   guesses Guess[]
+  groups  Group[]
+
+  imageUrl String
 }
 
 model Guess {
@@ -36,4 +39,11 @@ model Guess {
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Group {
+  id      String @id @default(uuid())
+  name    String
+
+  users   User[]
 }
