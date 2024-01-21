@@ -1,5 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Center, Heading, Spinner, VStack } from '@chakra-ui/react'
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Center,
+  Heading,
+  Spinner,
+  VStack,
+} from '@chakra-ui/react'
 import type { FindGroupQuery, FindGroupQueryVariables } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
@@ -9,11 +17,14 @@ export const QUERY = gql`
     group: group(id: $id) {
       id
       name
-      users {
-        id
-        name
-        email
-        imageUrl
+      scores {
+        user {
+          id
+          name
+          email
+          imageUrl
+        }
+        score
       }
     }
   }
@@ -45,6 +56,17 @@ export const Success = ({
       <Heading size="lg" fontWeight="semibold">
         {group.name}
       </Heading>
+      <VStack alignItems="start" spacing={2} w="full">
+        {group.scores.map(({ user, score }) => (
+          <Card key={user.id} w="full" variant="filled">
+            <CardHeader>
+              <Heading fontWeight="medium" size="sm">
+                <b>{score}</b> {user.name}
+              </Heading>
+            </CardHeader>
+          </Card>
+        ))}
+      </VStack>
     </VStack>
   )
 }

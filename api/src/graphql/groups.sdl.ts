@@ -5,8 +5,19 @@ export const schema = gql`
     users: [User!]!
   }
 
+  type GroupWithMonthlyScores {
+    id: String!
+    name: String!
+    scores: [Score!]!
+  }
+
+  type Score {
+    user: User!
+    score: Int!
+  }
+
   type Query {
     groups: [Group!]! @requireAuth
-    group(id: String!): Group @requireAuth
+    group(id: String!, date: DateTime): GroupWithMonthlyScores @requireAuth
   }
 `
