@@ -6,7 +6,7 @@ import WordleProvider from 'src/components/WordleProvider/WordleProvider'
 const HomePage = () => {
   return (
     <>
-      <Metadata title="Home" description="Home page" />
+      <Metadata title="Today" description="Today's Wordle" />
 
       <WordleProvider>
         {/* TODO - make this modal less annoying */}

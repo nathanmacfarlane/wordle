@@ -1,4 +1,4 @@
-import { VStack } from '@chakra-ui/react'
+import { Center, Spinner, VStack } from '@chakra-ui/react'
 
 import { useCreateGuess } from 'src/requests/useCreateGuess'
 import { padEnd } from 'src/utils/array'
@@ -8,7 +8,8 @@ import { useWordleContext } from '../WordleProvider/WordleContext'
 import WordleRow from '../WordleRow/WordleRow'
 
 const Wordle = () => {
-  const { solution, guesses, setGuesses, gameStatus } = useWordleContext()
+  const { solution, guesses, setGuesses, gameStatus, loadingGuesses } =
+    useWordleContext()
 
   const extendedGuesses = padEnd(guesses, 6, '')
 
@@ -59,8 +60,16 @@ const Wordle = () => {
     }
   }
 
+  if (loadingGuesses) {
+    return (
+      <Center width="100%" minH="100">
+        <Spinner />
+      </Center>
+    )
+  }
+
   return (
-    <VStack w="auto">
+    <VStack w="auto" h="100%" justifyContent="space-between" py="4">
       <VStack spacing={1}>
         {extendedGuesses.map(({ word, isLocked }, index) => (
           <WordleRow

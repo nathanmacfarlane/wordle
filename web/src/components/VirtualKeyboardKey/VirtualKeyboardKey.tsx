@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import { Delete } from 'lucide-react'
 
 export type VirtualKeyboardKeyProps = {
@@ -11,12 +11,24 @@ const VirtualKeyboardKey: React.FC<VirtualKeyboardKeyProps> = ({
   onPress,
 }) => {
   return (
-    <Button
-      fontSize={letter === 'ENTER' ? 12 : undefined}
+    <Box
+      bg="gray.300"
+      cursor="pointer"
+      borderRadius="md"
+      width={{
+        base:
+          letter === 'ENTER' ? '70px' : letter === 'delete' ? '40px' : '30px',
+        md: letter === 'ENTER' ? '70px' : '50px',
+      }}
+      _active={{ bg: 'gray.400' }}
+      height="50px"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
       onClick={() => onPress(letter)}
     >
       {letter === 'delete' ? <Delete size="18" /> : letter}
-    </Button>
+    </Box>
   )
 }
 

@@ -14,9 +14,9 @@ export type VirtualKeyboardProps = {
 
 const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ onPress }) => {
   return (
-    <VStack w="full">
+    <VStack w="full" spacing={{ base: 1, md: 2 }}>
       {KEYBOARD.map((row) => (
-        <HStack key={row.join('')}>
+        <HStack key={row.join('')} spacing={{ base: 1, md: 2 }}>
           {row.map((letter) => (
             <VirtualKeyboardKey
               key={letter}
