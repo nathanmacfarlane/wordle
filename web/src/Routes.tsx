@@ -13,6 +13,7 @@ const Routes = () => {
       <PrivateSet wrap={RootLayout} unauthenticated="auth">
         <Route path="/" page={HomePage} name="home" />
         <Route path="/groups" page={GroupsPage} name="groups" />
+        <Route path="/groups/{id}" page={GroupPage} name="group" />
       </PrivateSet>
       <Route notfound page={NotFoundPage} />
     </Router>

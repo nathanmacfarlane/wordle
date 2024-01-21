@@ -18,14 +18,20 @@ const NavSidebar = () => {
 
   return (
     <VStack spacing={1} minW="250px" alignItems="start">
-      {items.map((item) => (
-        <NavItem
-          key={item.route}
-          label={item.label}
-          route={item.route}
-          isActive={item.route === activePath}
-        />
-      ))}
+      {items.map((item) => {
+        const isActive =
+          item.route === '/'
+            ? activePath === item.route
+            : activePath.startsWith(item.route)
+        return (
+          <NavItem
+            key={item.route}
+            label={item.label}
+            route={item.route}
+            isActive={isActive}
+          />
+        )
+      })}
     </VStack>
   )
 }

@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react'
 import type { GroupsQuery } from 'types/graphql'
 
+import { navigate, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 export const QUERY = gql`
@@ -67,7 +68,13 @@ export const Success = ({ groups }: CellSuccessProps<GroupsQuery>) => {
             </VStack>
           </CardBody>
           <CardFooter>
-            <Button variant="solid" colorScheme="teal" size="sm">
+            <Button
+              variant="solid"
+              colorScheme="teal"
+              size="sm"
+              onClick={() => navigate(routes.group({ id: group.id }))}
+              width={{ base: 'full', md: 'auto' }}
+            >
               View Group
             </Button>
           </CardFooter>
