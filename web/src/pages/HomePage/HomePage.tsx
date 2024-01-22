@@ -1,18 +1,38 @@
-import { Box, Divider } from '@chakra-ui/react'
+import { Divider, Heading, Stack, VStack } from '@chakra-ui/react'
 
 import { Metadata } from '@redwoodjs/web'
 
+import AverageScoreCell from 'src/components/AverageScoreCell'
 import HomeHeader from 'src/components/HomeHeader/HomeHeader'
+import TotalWordlesCell from 'src/components/TotalWordlesCell'
+import WinPercentage from 'src/components/WinPercentageCell'
 
 const HomePage = () => {
   return (
     <>
       <Metadata title="Today" description="Today's Wordle" />
 
-      <Box py="4">
+      <VStack alignItems="start" spacing={4}>
         <HomeHeader />
-      </Box>
-      <Divider />
+        <Divider />
+        <Heading
+          size="md"
+          fontWeight="medium"
+          w="full"
+          textAlign={{ base: 'center', md: 'left' }}
+        >
+          My Stats
+        </Heading>
+        <Stack
+          spacing={4}
+          flexDir={{ base: 'column', sm: 'row' }}
+          w={{ base: 'full', md: 'auto' }}
+        >
+          <TotalWordlesCell />
+          <WinPercentage />
+          <AverageScoreCell />
+        </Stack>
+      </VStack>
     </>
   )
 }

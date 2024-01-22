@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
+  Box,
   Button,
   Card,
   CardBody,
@@ -17,37 +18,39 @@ const HomeHeader = () => {
   const user = useAuth()
 
   return (
-    <Stack
-      justifyContent="space-between"
-      alignItems={{ base: 'normal', sm: 'center' }}
-      flexDirection={{ base: 'column', xl: 'row' }}
-    >
-      <Heading>Welcome Back, {user.userMetadata?.firstName}! 👋</Heading>
-      <Stack spacing={4} flexDirection={{ base: 'column', sm: 'row' }}>
-        <Card variant="filled">
-          <CardBody>
-            <Stat>
-              <StatLabel>Today's Wordle</StatLabel>
-              <StatNumber>
-                <Button variant="link" color="teal">
-                  Play today's game
-                </Button>
-              </StatNumber>
-            </Stat>
-          </CardBody>
-        </Card>
-        <Card variant="filled">
-          <CardBody>
-            <Stat>
-              <StatLabel>Today's Average Score</StatLabel>
-              <StatNumber>
-                <TodaysAverageScoreCell />
-              </StatNumber>
-            </Stat>
-          </CardBody>
-        </Card>
+    <Box w="full">
+      <Stack
+        justifyContent="space-between"
+        alignItems={{ base: 'normal', sm: 'center' }}
+        flexDirection={{ base: 'column', xl: 'row' }}
+      >
+        <Heading>Welcome Back, {user.userMetadata?.firstName}! 👋</Heading>
+        <Stack spacing={4} flexDirection={{ base: 'column', sm: 'row' }}>
+          <Card variant="filled">
+            <CardBody>
+              <Stat>
+                <StatLabel>Today's Wordle</StatLabel>
+                <StatNumber>
+                  <Button variant="link" color="teal">
+                    Play today's game
+                  </Button>
+                </StatNumber>
+              </Stat>
+            </CardBody>
+          </Card>
+          <Card variant="filled">
+            <CardBody>
+              <Stat>
+                <StatLabel>Today's Average Score</StatLabel>
+                <StatNumber>
+                  <TodaysAverageScoreCell />
+                </StatNumber>
+              </Stat>
+            </CardBody>
+          </Card>
+        </Stack>
       </Stack>
-    </Stack>
+    </Box>
   )
 }
 

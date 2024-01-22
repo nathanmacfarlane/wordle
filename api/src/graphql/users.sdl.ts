@@ -5,4 +5,10 @@ export const schema = gql`
     email: String!
     imageUrl: String!
   }
+
+  type Query {
+    totalWordles: Int! @requireAuth
+    winPercentage: Float @requireAuth
+    averageScore: Float @requireAuth
+  }
 `
