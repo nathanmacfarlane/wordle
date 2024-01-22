@@ -10,7 +10,8 @@ const NavSidebar = () => {
   const { pathname: activePath } = useLocation()
   const items = useMemo(
     () => [
-      { label: 'Today', route: routes.home() },
+      { label: 'Home', route: routes.home() },
+      { label: 'Today', route: routes.today() },
       { label: 'Groups', route: routes.groups() },
     ],
     []

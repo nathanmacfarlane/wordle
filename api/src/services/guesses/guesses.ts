@@ -26,6 +26,25 @@ export const guesses: QueryResolvers['guesses'] = async (input) => {
   return guesses
 }
 
+export const todaysAverageScore: QueryResolvers['todaysAverageScore'] =
+  async () => {
+    const date = startOfDay(new Date())
+
+    const userNthGuesses = await db.guess.aggregate({
+      where: {
+        solution: { date },
+        correctCount: 5,
+      },
+      _avg: { nthGuess: true },
+    })
+
+    if (!userNthGuesses._avg.nthGuess) {
+      return null
+    }
+
+    return userNthGuesses._avg.nthGuess
+  }
+
 export const createGuess: MutationResolvers['createGuess'] = async ({
   input,
 }) => {

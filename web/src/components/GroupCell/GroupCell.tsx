@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
   Card,
-  CardBody,
   CardHeader,
   Center,
   Heading,

@@ -5,6 +5,7 @@ import RootLayout from './layouts/RootLayout/RootLayout'
 import GroupsPage from './pages/GroupsPage/GroupsPage'
 import HomePage from './pages/HomePage/HomePage'
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage'
+import TodayPage from './pages/TodayPage/TodayPage'
 
 const Routes = () => {
   return (
@@ -12,6 +13,7 @@ const Routes = () => {
       <Route path="/auth" page={AuthPage} name="auth" />
       <PrivateSet wrap={RootLayout} unauthenticated="auth">
         <Route path="/" page={HomePage} name="home" />
+        <Route path="/today" page={TodayPage} name="today" />
         <Route path="/groups" page={GroupsPage} name="groups" />
         <Route path="/groups/{id}" page={GroupPage} name="group" />
       </PrivateSet>

@@ -12,6 +12,7 @@ export const schema = gql`
 
   type Query {
     guesses(date: DateTime): [Guess!]! @requireAuth
+    todaysAverageScore: Float @requireAuth
   }
 
   input CreateGuessInput {

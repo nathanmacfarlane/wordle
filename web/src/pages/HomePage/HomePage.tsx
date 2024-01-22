@@ -1,18 +1,18 @@
+import { Box, Divider } from '@chakra-ui/react'
+
 import { Metadata } from '@redwoodjs/web'
 
-import Wordle from 'src/components/Wordle/Wordle'
-import WordleProvider from 'src/components/WordleProvider/WordleProvider'
+import HomeHeader from 'src/components/HomeHeader/HomeHeader'
 
 const HomePage = () => {
   return (
     <>
       <Metadata title="Today" description="Today's Wordle" />
 
-      <WordleProvider>
-        {/* TODO - make this modal less annoying */}
-        {/* <GameOverModal />  */}
-        <Wordle />
-      </WordleProvider>
+      <Box py="4">
+        <HomeHeader />
+      </Box>
+      <Divider />
     </>
   )
 }
