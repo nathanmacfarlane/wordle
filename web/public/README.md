@@ -3,9 +3,9 @@ Use this folder to add static files directly to your app. All included files and
 >Note: files will *not* hot reload while the development server is running. You'll need to manually stop/start to access file changes.
 
 ### Example Use
-A file like `favicon.png` will be copied to `/dist/favicon.png`. A folder containing a file such as `static-files/my-logo.jpg` will be copied to `/dist/static-files/my-logo.jpg`. These can be referenced in your code directly without any special handling, e.g.
+A file like `favicon.ico` will be copied to `/dist/favicon.ico`. A folder containing a file such as `static-files/my-logo.jpg` will be copied to `/dist/static-files/my-logo.jpg`. These can be referenced in your code directly without any special handling, e.g.
 ```
-<link rel="icon" type="image/png" href="/favicon.png" />
+<link rel="icon" type="image/png" href="/favicon.ico" />
 ```
 and
 ```

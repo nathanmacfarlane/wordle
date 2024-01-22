@@ -36,7 +36,7 @@ export const Success = ({
     <StatCard
       label="Win Percentage"
       icon={Percent}
-      value={winPercentage.toString()}
+      value={`${winPercentage}%`}
     />
   )
 }
