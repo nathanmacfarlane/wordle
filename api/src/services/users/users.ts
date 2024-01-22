@@ -22,6 +22,10 @@ export const winPercentage: QueryResolvers['winPercentage'] = async () => {
     where: { userId },
   })
 
+  if (allWordles.length === 0) {
+    return 0
+  }
+
   const totalWordles = allWordles.length
 
   const numWins = await db.guess.count({
