@@ -23,7 +23,7 @@ export const winPercentage: QueryResolvers['winPercentage'] = async () => {
   })
 
   if (allWordles.length === 0) {
-    return 0
+    return null
   }
 
   const totalWordles = allWordles.length
