@@ -11,6 +11,8 @@ import {
   StatNumber,
 } from '@chakra-ui/react'
 
+import { navigate, routes } from '@redwoodjs/router'
+
 import { useAuth } from 'src/auth'
 import TodaysAverageScoreCell from 'src/components/TodaysAverageScoreCell'
 
@@ -31,7 +33,11 @@ const HomeHeader = () => {
               <Stat>
                 <StatLabel>Today's Wordle</StatLabel>
                 <StatNumber>
-                  <Button variant="link" color="teal">
+                  <Button
+                    variant="link"
+                    color="teal"
+                    onClick={() => navigate(routes.today())}
+                  >
                     Play today's game
                   </Button>
                 </StatNumber>
