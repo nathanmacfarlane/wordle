@@ -5,7 +5,7 @@ import GroupsCell from 'src/components/GroupsCell'
 const GroupsPage = () => {
   return (
     <>
-      <Metadata title="Groups" description="Groups page" />
+      <Metadata title="Leagues" description="Groups page" />
 
       <GroupsCell />
     </>

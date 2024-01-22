@@ -72,10 +72,10 @@ export const Success = ({ groups }: CellSuccessProps<GroupsQuery>) => {
               variant="solid"
               colorScheme="teal"
               size="sm"
-              onClick={() => navigate(routes.group({ id: group.id }))}
+              onClick={() => navigate(routes.league({ id: group.id }))}
               width={{ base: 'full', md: 'auto' }}
             >
-              View Group
+              View League
             </Button>
           </CardFooter>
         </Card>

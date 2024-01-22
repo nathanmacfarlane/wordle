@@ -9,7 +9,7 @@ export type GroupPageProps = {
 const GroupPage: React.FC<GroupPageProps> = ({ id }) => {
   return (
     <>
-      <Metadata title="Group" description="Group page" />
+      <Metadata title="League" description="League page" />
 
       <GroupCell id={id} />
     </>

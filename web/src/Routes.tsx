@@ -14,8 +14,8 @@ const Routes = () => {
       <PrivateSet wrap={RootLayout} unauthenticated="auth">
         <Route path="/" page={HomePage} name="home" />
         <Route path="/today" page={TodayPage} name="today" />
-        <Route path="/groups" page={GroupsPage} name="groups" />
-        <Route path="/groups/{id}" page={GroupPage} name="group" />
+        <Route path="/leagues" page={GroupsPage} name="leagues" />
+        <Route path="/leagues/{id}" page={GroupPage} name="league" />
       </PrivateSet>
       <Route notfound page={NotFoundPage} />
     </Router>

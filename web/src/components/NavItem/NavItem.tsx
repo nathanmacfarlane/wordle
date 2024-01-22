@@ -12,7 +12,6 @@ export type NavItemProps = {
 
 const NavItem: React.FC<NavItemProps> = ({ label, isActive, route, icon }) => {
   const Icon = icon
-  const iconProps = isActive ? { fill: '#aaa', strokeWidth: 2 } : {}
 
   return (
     <Box w="full">
@@ -24,7 +23,7 @@ const NavItem: React.FC<NavItemProps> = ({ label, isActive, route, icon }) => {
         isActive={isActive}
         onClick={() => navigate(route)}
       >
-        <Icon size={18} {...iconProps} style={{ marginRight: 5 }} />
+        <Icon size={18} style={{ marginRight: 5 }} />
         {label}
       </Button>
     </Box>

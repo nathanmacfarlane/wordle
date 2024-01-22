@@ -14,7 +14,7 @@ const NavTabs = () => {
     () => [
       { label: 'Home', icon: Home, route: routes.home() },
       { label: 'Today', icon: Puzzle, route: routes.today() },
-      { label: 'Groups', icon: Users, route: routes.groups() },
+      { label: 'Leagues', icon: Users, route: routes.leagues() },
     ],
     []
   )

@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
+  Avatar,
   Center,
   Heading,
   Spinner,
@@ -44,7 +45,7 @@ export const Loading = () => (
 
 export const Empty = () => (
   <Center w="100%" minH="100">
-    You're not in any groups yet.
+    You're not in any leagues yet.
   </Center>
 )
 
@@ -77,7 +78,10 @@ export const Success = ({
         <Tbody>
           {group.scores.map(({ user, score, activeDays, averageScore }) => (
             <Tr key={user.id}>
-              <Td>{user.name.split(' ')[0]}</Td>
+              <Td display="flex" alignItems="center">
+                <Avatar size="sm" name={user.name} src={user.imageUrl} mr="2" />
+                {user.name.split(' ')[0]}
+              </Td>
               <Td isNumeric>{averageScore.toFixed(2)}</Td>
               <Td isNumeric>{score}</Td>
               <Td isNumeric>{activeDays}</Td>
