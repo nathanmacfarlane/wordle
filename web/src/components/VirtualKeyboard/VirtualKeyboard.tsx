@@ -10,9 +10,13 @@ const KEYBOARD = [
 
 export type VirtualKeyboardProps = {
   onPress: (letter: string) => void
+  isSubmitting?: boolean
 }
 
-const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ onPress }) => {
+const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({
+  onPress,
+  isSubmitting,
+}) => {
   return (
     <VStack w="full" spacing={{ base: 1, md: 2 }}>
       {KEYBOARD.map((row) => (
@@ -22,6 +26,7 @@ const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ onPress }) => {
               key={letter}
               letter={letter}
               onPress={onPress}
+              showSpinner={isSubmitting && letter === 'ENTER'}
             />
           ))}
         </HStack>

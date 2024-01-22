@@ -14,6 +14,8 @@ export const schema = gql`
   type Score {
     user: User!
     score: Int!
+    activeDays: Int!
+    averageScore: Float!
   }
 
   type Query {

@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 
 import { VStack } from '@chakra-ui/react'
+import { Home, Puzzle, Users } from 'lucide-react'
 
 import { routes, useLocation } from '@redwoodjs/router'
 
@@ -10,9 +11,9 @@ const NavSidebar = () => {
   const { pathname: activePath } = useLocation()
   const items = useMemo(
     () => [
-      { label: 'Home', route: routes.home() },
-      { label: 'Today', route: routes.today() },
-      { label: 'Groups', route: routes.groups() },
+      { label: 'Home', icon: Home, route: routes.home() },
+      { label: 'Today', icon: Puzzle, route: routes.today() },
+      { label: 'Groups', icon: Users, route: routes.groups() },
     ],
     []
   )
@@ -30,6 +31,7 @@ const NavSidebar = () => {
             label={item.label}
             route={item.route}
             isActive={isActive}
+            icon={item.icon}
           />
         )
       })}

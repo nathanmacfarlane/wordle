@@ -1,10 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  Card,
-  CardHeader,
   Center,
   Heading,
   Spinner,
+  Table,
+  TableCaption,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
   VStack,
 } from '@chakra-ui/react'
 import type { FindGroupQuery, FindGroupQueryVariables } from 'types/graphql'
@@ -24,6 +29,8 @@ export const QUERY = gql`
           imageUrl
         }
         score
+        activeDays
+        averageScore
       }
     }
   }
@@ -55,17 +62,29 @@ export const Success = ({
       <Heading size="lg" fontWeight="semibold">
         {group.name}
       </Heading>
-      <VStack alignItems="start" spacing={2} w="full">
-        {group.scores.map(({ user, score }) => (
-          <Card key={user.id} w="full" variant="filled">
-            <CardHeader>
-              <Heading fontWeight="medium" size="sm">
-                <b>{score}</b> {user.name}
-              </Heading>
-            </CardHeader>
-          </Card>
-        ))}
-      </VStack>
+      <Table variant="simple" size="sm">
+        <TableCaption>
+          Month of {new Date().toLocaleString('default', { month: 'long' })}
+        </TableCaption>
+        <Thead>
+          <Tr>
+            <Th>User</Th>
+            <Th isNumeric>Avg</Th>
+            <Th isNumeric>Total</Th>
+            <Th isNumeric>Days</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {group.scores.map(({ user, score, activeDays, averageScore }) => (
+            <Tr key={user.id}>
+              <Td>{user.name.split(' ')[0]}</Td>
+              <Td isNumeric>{averageScore.toFixed(2)}</Td>
+              <Td isNumeric>{score}</Td>
+              <Td isNumeric>{activeDays}</Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
     </VStack>
   )
 }

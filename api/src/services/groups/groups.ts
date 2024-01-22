@@ -39,13 +39,23 @@ export const group: QueryResolvers['group'] = async ({ id, date: _date }) => {
     const existingScore = acc.find((s) => s.user.id === score.userId)
     if (existingScore) {
       existingScore.score += 1
+      existingScore.solutions = [
+        ...new Set([...existingScore.solutions, score.solutionId]),
+      ]
     } else {
-      acc.push({ user: score.user, score: 1 })
+      acc.push({ user: score.user, score: 1, solutions: [score.solutionId] })
     }
     return acc
-  }, [] as { user: User; score: number }[])
+  }, [] as { user: User; score: number; solutions: number[] }[])
 
-  const sortedScores = scoresByUser.sort((a, b) => b.score - a.score)
+  const sortedScores = scoresByUser
+    .map((s) => ({
+      user: s.user,
+      score: s.score,
+      activeDays: s.solutions.length,
+      averageScore: s.score / s.solutions.length,
+    }))
+    .sort((a, b) => b.averageScore - a.averageScore)
 
   return {
     id: group.id,

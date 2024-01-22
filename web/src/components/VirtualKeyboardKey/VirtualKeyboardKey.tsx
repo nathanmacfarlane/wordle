@@ -1,14 +1,16 @@
-import { Box } from '@chakra-ui/react'
+import { Box, Spinner } from '@chakra-ui/react'
 import { Delete } from 'lucide-react'
 
 export type VirtualKeyboardKeyProps = {
   letter: string
   onPress: (letter: string) => void
+  showSpinner?: boolean
 }
 
 const VirtualKeyboardKey: React.FC<VirtualKeyboardKeyProps> = ({
   letter,
   onPress,
+  showSpinner,
 }) => {
   return (
     <Box
@@ -27,7 +29,11 @@ const VirtualKeyboardKey: React.FC<VirtualKeyboardKeyProps> = ({
       alignItems="center"
       onClick={() => onPress(letter)}
     >
-      {letter === 'delete' ? <Delete size="18" /> : letter}
+      {showSpinner ? (
+        <Spinner />
+      ) : (
+        <>{letter === 'delete' ? <Delete size="18" /> : letter}</>
+      )}
     </Box>
   )
 }

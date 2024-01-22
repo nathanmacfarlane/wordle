@@ -1,3 +1,4 @@
+import { useToast } from '@chakra-ui/react'
 import { Center, Spinner, VStack } from '@chakra-ui/react'
 
 import { useCreateGuess } from 'src/requests/useCreateGuess'
@@ -13,7 +14,9 @@ const Wordle = () => {
 
   const extendedGuesses = padEnd(guesses, 6, '')
 
-  const [createGuess] = useCreateGuess()
+  const toast = useToast()
+
+  const [createGuess, { loading: isSavingGuess }] = useCreateGuess()
 
   const handleKeyPress = (key: string) => {
     if (gameStatus !== 'playing') return
@@ -45,10 +48,20 @@ const Wordle = () => {
       if (!activeGuess) return
       const { word } = activeGuess
       if (word.length !== 5) return
-      const prevGuesses = guesses.filter(({ isLocked }) => isLocked)
-      const newGuesses = [...prevGuesses, { word, isLocked: true }]
-      setGuesses(newGuesses)
       createGuess({ variables: { input: { word } } })
+        .then(() => {
+          const prevGuesses = guesses.filter(({ isLocked }) => isLocked)
+          const newGuesses = [...prevGuesses, { word, isLocked: true }]
+          setGuesses(newGuesses)
+        })
+        .catch(() => {
+          toast({
+            title: `${word} is not a valid word`,
+            status: 'error',
+            isClosable: true,
+            position: 'top',
+          })
+        })
     }
 
     if (key === 'ENTER') {
@@ -80,7 +93,7 @@ const Wordle = () => {
           />
         ))}
       </VStack>
-      <VirtualKeyboard onPress={handleKeyPress} />
+      <VirtualKeyboard onPress={handleKeyPress} isSubmitting={isSavingGuess} />
     </VStack>
   )
 }
