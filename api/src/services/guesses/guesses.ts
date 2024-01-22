@@ -3,6 +3,7 @@ import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 
 import { getAuthedUser } from 'src/lib/auth'
 import { db } from 'src/lib/db'
+import { VALID_WORDS } from 'src/lib/validWords'
 
 export const guesses: QueryResolvers['guesses'] = async (input) => {
   const date = startOfDay(input.date || new Date())
@@ -50,6 +51,13 @@ export const createGuess: MutationResolvers['createGuess'] = async ({
 }) => {
   const date = startOfDay(new Date())
   const { id: userId } = getAuthedUser()
+
+  // log time it took to check if word is valid
+  console.time('valid word')
+  if (VALID_WORDS.indexOf(input.word) === -1) {
+    throw new Error('Invalid word')
+  }
+  console.timeEnd('valid word')
 
   const [existingGuesses, solution] = await Promise.all([
     db.guess.count({
