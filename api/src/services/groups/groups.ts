@@ -55,7 +55,7 @@ export const group: QueryResolvers['group'] = async ({ id, date: _date }) => {
       activeDays: s.solutions.length,
       averageScore: s.score / s.solutions.length,
     }))
-    .sort((a, b) => b.averageScore - a.averageScore)
+    .sort((a, b) => a.averageScore - b.averageScore)
 
   return {
     id: group.id,
