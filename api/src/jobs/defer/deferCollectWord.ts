@@ -1,10 +1,10 @@
-import { format } from 'date-fns'
+import { format, startOfTomorrow } from 'date-fns'
 
 import { defer } from 'src/jobs/clients/defer'
 import { db } from 'src/lib/db'
 
 const deferCollectWord = async () => {
-  const requestedDate = format(new Date(), 'yyyy-MM-dd')
+  const requestedDate = format(startOfTomorrow(), 'yyyy-MM-dd')
   const url = `https://www.nytimes.com/svc/wordle/v2/${requestedDate}.json`
 
   const response = (await fetch(url).then((res) => res.json())) as {
