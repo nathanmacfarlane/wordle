@@ -52,6 +52,8 @@ export const createGuess: MutationResolvers['createGuess'] = async ({
   const date = startOfDay(new Date())
   const { id: userId } = getAuthedUser()
 
+  console.log('searching for solution with date: ', date)
+
   if (VALID_WORDS.indexOf(input.word) === -1) {
     throw new Error('Invalid word')
   }
