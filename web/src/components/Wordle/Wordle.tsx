@@ -54,7 +54,8 @@ const Wordle = () => {
           const newGuesses = [...prevGuesses, { word, isLocked: true }]
           setGuesses(newGuesses)
         })
-        .catch(() => {
+        .catch((e) => {
+          console.error(e)
           toast({
             title: `${word} is not a valid word`,
             status: 'error',
