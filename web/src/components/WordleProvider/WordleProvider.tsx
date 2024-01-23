@@ -1,5 +1,7 @@
 import { PropsWithChildren, useState } from 'react'
 
+import { Solution } from 'types/graphql'
+
 import { useFetchGuesses } from 'src/requests/useFetchGuesses'
 import { useFetchSolution } from 'src/requests/useFetchSolution'
 
@@ -13,7 +15,11 @@ const WordleProvider: React.FC<PropsWithChildren<WordleProviderProps>> = ({
   const [guesses, setGuesses] = useState<
     { word: string; isLocked?: boolean }[]
   >([])
-  const [solution, setSolution] = useState<string>('')
+  const [solution, setSolution] = useState<Solution>({
+    id: -1,
+    date: '',
+    word: '',
+  })
   const { loading: loadingGuesses } = useFetchGuesses({
     variables: {},
     onCompleted: (data) => {
@@ -30,12 +36,12 @@ const WordleProvider: React.FC<PropsWithChildren<WordleProviderProps>> = ({
   useFetchSolution({
     onCompleted: (data) => {
       if (!data.solution) return // TODO - handle this error
-      setSolution(data.solution.word)
+      setSolution(data.solution)
     },
   })
 
   const hasCorrectSolution = guesses.some(
-    ({ word, isLocked }) => word === solution && isLocked
+    ({ word, isLocked }) => word === solution.word && isLocked
   )
   const failedToday = guesses.length === 6 && !hasCorrectSolution
 

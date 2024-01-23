@@ -4,10 +4,14 @@ import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 import { getAuthedUser } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 import { VALID_WORDS } from 'src/lib/validWords'
+import { getCurrentDateForUser } from 'src/utils/generateUserDate'
 
 export const guesses: QueryResolvers['guesses'] = async (input) => {
-  const date = startOfDay(input.date || new Date())
   const { id: userId } = getAuthedUser()
+
+  const date = input.date
+    ? startOfDay(input.date)
+    : await getCurrentDateForUser(userId)
 
   const guesses = await db.guess.findMany({
     where: {
@@ -29,7 +33,8 @@ export const guesses: QueryResolvers['guesses'] = async (input) => {
 
 export const todaysAverageScore: QueryResolvers['todaysAverageScore'] =
   async () => {
-    const date = startOfDay(new Date())
+    const { id: userId } = getAuthedUser()
+    const date = await getCurrentDateForUser(userId)
 
     const userNthGuesses = await db.guess.aggregate({
       where: {
@@ -49,10 +54,8 @@ export const todaysAverageScore: QueryResolvers['todaysAverageScore'] =
 export const createGuess: MutationResolvers['createGuess'] = async ({
   input,
 }) => {
-  const date = startOfDay(new Date())
   const { id: userId } = getAuthedUser()
-
-  console.log('searching for solution with date: ', date)
+  const date = await getCurrentDateForUser(userId)
 
   if (VALID_WORDS.indexOf(input.word) === -1) {
     throw new Error('Invalid word')

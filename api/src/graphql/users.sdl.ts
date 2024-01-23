@@ -11,4 +11,8 @@ export const schema = gql`
     winPercentage: Float @requireAuth
     averageScore: Float @requireAuth
   }
+
+  type Mutation {
+    updateUserTz(timezone: String!): Boolean @requireAuth
+  }
 `

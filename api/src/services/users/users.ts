@@ -1,4 +1,4 @@
-import type { QueryResolvers } from 'types/graphql'
+import type { MutationResolvers, QueryResolvers } from 'types/graphql'
 
 import { getAuthedUser } from 'src/lib/auth'
 import { db } from 'src/lib/db'
@@ -44,4 +44,17 @@ export const averageScore: QueryResolvers['averageScore'] = async () => {
   })
 
   return guessAggregate._avg.nthGuess
+}
+
+export const updateUserTz: MutationResolvers['updateUserTz'] = async ({
+  timezone,
+}) => {
+  const { id: userId } = getAuthedUser()
+
+  await db.user.update({
+    where: { id: userId },
+    data: { timezone },
+  })
+
+  return true
 }

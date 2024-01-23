@@ -22,6 +22,8 @@ model User {
   guesses Guess[]
   groups  Group[]
 
+  timezone String?
+
   imageUrl String
 }
 

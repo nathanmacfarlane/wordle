@@ -1,4 +1,6 @@
-import { useToast } from '@chakra-ui/react'
+import { useMemo } from 'react'
+
+import { Text, useToast } from '@chakra-ui/react'
 import { Center, Spinner, VStack } from '@chakra-ui/react'
 
 import { useCreateGuess } from 'src/requests/useCreateGuess'
@@ -17,6 +19,14 @@ const Wordle = () => {
   const toast = useToast()
 
   const [createGuess, { loading: isSavingGuess }] = useCreateGuess()
+
+  const today = useMemo(() => {
+    if (!solution.date) return ''
+    const date = new Date(solution.date)
+    return `${
+      date.getUTCMonth() + 1
+    }/${date.getUTCDate()}/${date.getUTCFullYear()}`
+  }, [solution])
 
   const handleKeyPress = (key: string) => {
     if (gameStatus !== 'playing') return
@@ -84,12 +94,13 @@ const Wordle = () => {
 
   return (
     <VStack w="auto" h="100%" justifyContent="space-between" py="4">
+      <Text>{today}</Text>
       <VStack spacing={1}>
         {extendedGuesses.map(({ word, isLocked }, index) => (
           <WordleRow
             key={index}
             guess={word}
-            solution={solution}
+            solution={solution.word}
             isLocked={isLocked}
           />
         ))}
