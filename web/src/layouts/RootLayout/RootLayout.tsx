@@ -25,7 +25,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
 
   return (
     <TimezoneProvider>
-      <VStack spacing={2} h="100vh">
+      <VStack spacing={2} h={{ base: '80vh', md: '100vh' }}>
         <Box bg="gray.300" px="6" py="2" w="full">
           <HStack justifyContent="space-between">
             <Box display={{ base: 'block', md: 'none' }}>
