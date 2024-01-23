@@ -78,6 +78,7 @@ export const handler = async (req: APIGatewayEvent, _context: Context) => {
     await db.user.upsert({
       where: { email },
       create: {
+        id: userId,
         name,
         email,
         imageUrl,
