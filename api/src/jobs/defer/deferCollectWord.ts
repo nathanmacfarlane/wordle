@@ -26,11 +26,11 @@ const deferCollectWord = async () => {
     create: {
       id: response.id,
       word: response.solution,
-      date: response.print_date,
+      date: new Date(response.print_date),
     },
     update: {
       word: response.solution,
-      date: response.print_date,
+      date: new Date(response.print_date),
     },
   })
 
