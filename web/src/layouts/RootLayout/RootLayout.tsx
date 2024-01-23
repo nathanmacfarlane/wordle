@@ -1,8 +1,19 @@
-import { Box, HStack, VStack } from '@chakra-ui/react'
+import {
+  Box,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerBody,
+  DrawerCloseButton,
+  HStack,
+  IconButton,
+  VStack,
+  useDisclosure,
+} from '@chakra-ui/react'
 import { UserButton } from '@clerk/clerk-react'
+import { Menu } from 'lucide-react'
 
 import NavSidebar from 'src/components/NavSidebar/NavSidebar'
-import NavTabs from 'src/components/NavTabs/NavTabs'
 import { TimezoneProvider } from 'src/components/TimezoneProvider/TimezoneProvider'
 
 type RootLayoutProps = {
@@ -10,11 +21,21 @@ type RootLayoutProps = {
 }
 
 const RootLayout = ({ children }: RootLayoutProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
   return (
     <TimezoneProvider>
       <VStack spacing={2} h="100vh">
         <Box bg="gray.300" px="6" py="2" w="full">
           <HStack justifyContent="space-between">
+            <Box display={{ base: 'block', md: 'none' }}>
+              <IconButton
+                icon={<Menu />}
+                aria-label="Menu"
+                variant="ghost"
+                onClick={onOpen}
+              />
+            </Box>
             <Box>Mac Wordle</Box>
             <UserButton />
           </HStack>
@@ -27,10 +48,16 @@ const RootLayout = ({ children }: RootLayoutProps) => {
             {children}
           </Box>
         </HStack>
-        <Box display={{ base: 'block', md: 'none' }} w="100%">
-          <NavTabs />
-        </Box>
       </VStack>
+      <Drawer isOpen={isOpen} placement="left" onClose={onClose} size="xs">
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerBody mt={50}>
+            <NavSidebar onClick={onClose} />
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </TimezoneProvider>
   )
 }

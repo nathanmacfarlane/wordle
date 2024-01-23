@@ -7,7 +7,11 @@ import { routes, useLocation } from '@redwoodjs/router'
 
 import NavItem from '../NavItem/NavItem'
 
-const NavSidebar = () => {
+export type NavSidebarProps = {
+  onClick?: () => void
+}
+
+const NavSidebar: React.FC<NavSidebarProps> = ({ onClick }) => {
   const { pathname: activePath } = useLocation()
   const items = useMemo(
     () => [
@@ -32,6 +36,7 @@ const NavSidebar = () => {
             route={item.route}
             isActive={isActive}
             icon={item.icon}
+            onClick={onClick}
           />
         )
       })}

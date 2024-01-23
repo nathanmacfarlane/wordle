@@ -8,9 +8,16 @@ export type NavItemProps = {
   route: string
   isActive?: boolean
   icon: LucideIcon
+  onClick?: () => void
 }
 
-const NavItem: React.FC<NavItemProps> = ({ label, isActive, route, icon }) => {
+const NavItem: React.FC<NavItemProps> = ({
+  label,
+  isActive,
+  route,
+  icon,
+  onClick,
+}) => {
   const Icon = icon
 
   return (
@@ -21,7 +28,10 @@ const NavItem: React.FC<NavItemProps> = ({ label, isActive, route, icon }) => {
         rounded={2}
         justifyContent="flex-start"
         isActive={isActive}
-        onClick={() => navigate(route)}
+        onClick={() => {
+          onClick?.()
+          navigate(route)
+        }}
       >
         <Icon size={18} style={{ marginRight: 5 }} />
         {label}
