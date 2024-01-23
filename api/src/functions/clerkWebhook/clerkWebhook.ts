@@ -33,7 +33,7 @@ export const handler = async (req: APIGatewayEvent, _context: Context) => {
     })
   }
 
-  if ([!'user.updated', 'user.created', 'user.deleted'].includes(event.type)) {
+  if (!['user.updated', 'user.created', 'user.deleted'].includes(event.type)) {
     return handleResponse(true, { message: 'Unhandled Event' })
   }
 
