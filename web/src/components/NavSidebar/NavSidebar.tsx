@@ -17,7 +17,7 @@ const NavSidebar: React.FC<NavSidebarProps> = ({ onClick }) => {
     () => [
       { label: 'Dashboard', icon: Home, route: routes.home() },
       { label: 'Today', icon: Puzzle, route: routes.today() },
-      { label: 'Leagues', icon: Users, route: routes.leagues() },
+      { label: 'Leaderboard', icon: Users, route: routes.leaderboard() },
     ],
     []
   )

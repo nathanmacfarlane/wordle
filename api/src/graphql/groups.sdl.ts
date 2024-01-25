@@ -21,5 +21,6 @@ export const schema = gql`
   type Query {
     groups: [Group!]! @requireAuth
     group(id: String!, date: DateTime): GroupWithMonthlyScores @requireAuth
+    leaderboard(date: DateTime): [Score!]! @requireAuth
   }
 `

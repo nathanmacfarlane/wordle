@@ -63,3 +63,43 @@ export const group: QueryResolvers['group'] = async ({ id, date: _date }) => {
     scores: sortedScores,
   }
 }
+
+export const leaderboard: QueryResolvers['leaderboard'] = async ({
+  date: _date,
+}) => {
+  const som = startOfMonth(_date || new Date())
+  const eom = endOfMonth(_date || new Date())
+
+  const scores = await db.guess.findMany({
+    where: {
+      solution: {
+        date: { gte: som, lte: eom },
+      },
+    },
+    include: { user: true },
+  })
+
+  const scoresByUser = scores.reduce((acc, score) => {
+    const existingScore = acc.find((s) => s.user.id === score.userId)
+    if (existingScore) {
+      existingScore.score += 1
+      existingScore.solutions = [
+        ...new Set([...existingScore.solutions, score.solutionId]),
+      ]
+    } else {
+      acc.push({ user: score.user, score: 1, solutions: [score.solutionId] })
+    }
+    return acc
+  }, [] as { user: User; score: number; solutions: number[] }[])
+
+  const sortedScores = scoresByUser
+    .map((s) => ({
+      user: s.user,
+      score: s.score,
+      activeDays: s.solutions.length,
+      averageScore: s.score / s.solutions.length,
+    }))
+    .sort((a, b) => a.averageScore - b.averageScore)
+
+  return sortedScores
+}
