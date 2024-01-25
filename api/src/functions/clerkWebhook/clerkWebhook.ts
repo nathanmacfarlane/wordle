@@ -67,8 +67,12 @@ export const handler = async (req: APIGatewayEvent, _context: Context) => {
     (e) => e.id === primaryEmailId
   )?.email_address
   const name = `${event.data.first_name} ${event.data.last_name}`
-  const imageUrl = event.data.profile_image_url
+  const imageUrl = event.data.image_url
   const userId = event.data.id
+
+  const group = await db.group
+    .findMany()
+    .then((groups) => groups.find((group) => group.name.includes('Mac')))
 
   if (!email) {
     return handleResponse(false, { message: 'no email' })
@@ -82,6 +86,11 @@ export const handler = async (req: APIGatewayEvent, _context: Context) => {
         name,
         email,
         imageUrl,
+        groups: group
+          ? {
+              connect: { id: group.id },
+            }
+          : undefined,
       },
       update: {
         name,
