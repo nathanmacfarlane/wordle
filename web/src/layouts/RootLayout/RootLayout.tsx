@@ -14,7 +14,6 @@ import { UserButton } from '@clerk/clerk-react'
 import { Menu } from 'lucide-react'
 
 import NavSidebar from 'src/components/NavSidebar/NavSidebar'
-import { TimezoneProvider } from 'src/components/TimezoneProvider/TimezoneProvider'
 
 type RootLayoutProps = {
   children?: React.ReactNode
@@ -24,7 +23,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
-    <TimezoneProvider>
+    <>
       <VStack spacing={2} h={{ base: '80vh', md: '100vh' }}>
         <Box bg="gray.300" px="6" py="2" w="full">
           <HStack justifyContent="space-between">
@@ -58,7 +57,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-    </TimezoneProvider>
+    </>
   )
 }
 
