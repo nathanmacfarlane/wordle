@@ -1,10 +1,10 @@
-import { Box, Spinner } from '@chakra-ui/react'
+import { Center, Spinner } from '@chakra-ui/react'
 
 const FullscreenLoading = () => {
   return (
-    <Box w="full" h="100vh">
+    <Center w="full" h="100vh">
       <Spinner />
-    </Box>
+    </Center>
   )
 }
 
