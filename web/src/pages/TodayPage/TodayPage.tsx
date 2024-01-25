@@ -1,16 +1,14 @@
 import { Metadata } from '@redwoodjs/web'
 
-import Wordle from 'src/components/Wordle/Wordle'
-import WordleProvider from 'src/components/WordleProvider/WordleProvider'
+import BoardCell from 'src/components/BoardCell'
 
 const TodayPage = () => {
+  const todayString = new Date().toISOString().split('T')[0]
   return (
     <>
       <Metadata title="Today" description="Today page" />
 
-      <WordleProvider>
-        <Wordle />
-      </WordleProvider>
+      <BoardCell date={todayString} />
     </>
   )
 }

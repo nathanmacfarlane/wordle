@@ -11,24 +11,41 @@ const KEYBOARD = [
 export type VirtualKeyboardProps = {
   onPress: (letter: string) => void
   isSubmitting?: boolean
+  keyStatuses: {
+    incorrectLetters: string[]
+    correctLetters: string[]
+    misplacedLetters: string[]
+  }
 }
 
 const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({
   onPress,
   isSubmitting,
+  keyStatuses,
 }) => {
   return (
     <VStack w="full" spacing={{ base: 1, md: 2 }}>
       {KEYBOARD.map((row) => (
         <HStack key={row.join('')} spacing={{ base: 1, md: 2 }}>
-          {row.map((letter) => (
-            <VirtualKeyboardKey
-              key={letter}
-              letter={letter}
-              onPress={onPress}
-              showSpinner={isSubmitting && letter === 'ENTER'}
-            />
-          ))}
+          {row.map((letter) => {
+            const lowerLetter = letter.toLowerCase()
+            const keyStatus = keyStatuses.incorrectLetters.includes(lowerLetter)
+              ? 'INCORRECT'
+              : keyStatuses.correctLetters.includes(lowerLetter)
+              ? 'CORRECT'
+              : keyStatuses.misplacedLetters.includes(lowerLetter)
+              ? 'MISPLACED'
+              : undefined
+            return (
+              <VirtualKeyboardKey
+                key={letter}
+                letter={letter}
+                onPress={onPress}
+                showSpinner={isSubmitting && letter === 'ENTER'}
+                keyStatus={keyStatus}
+              />
+            )
+          })}
         </HStack>
       ))}
     </VStack>

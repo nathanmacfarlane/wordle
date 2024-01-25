@@ -1,23 +1,24 @@
 import { Box, Text } from '@chakra-ui/react'
+import { BoardCellStatus } from 'types/graphql'
 
 export type WordleCellProps = {
   value?: string
-  status?: 'correct' | 'incorrect' | 'misplaced' | 'none'
+  status: BoardCellStatus
 }
 
 const WordleCell: React.FC<WordleCellProps> = ({ value, status }) => {
   const bg =
-    status === 'correct'
+    status === 'CORRECT'
       ? '#7eab70'
-      : status === 'incorrect'
+      : status === 'INCORRECT'
       ? '#7a7b7e'
-      : status === 'misplaced'
+      : status === 'MISPLACED'
       ? '#c6b76a'
       : undefined
 
-  const textColor = status === 'none' ? 'black' : ''
+  const textColor = status === 'EMPTY' ? 'black' : ''
 
-  const outline = status === 'none' ? '1px solid #7a7b7e' : undefined
+  const outline = status === 'EMPTY' ? '1px solid #7a7b7e' : undefined
 
   return (
     <Box
