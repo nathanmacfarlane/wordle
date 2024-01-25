@@ -69,6 +69,27 @@ export const Success = ({
       } else {
         setActiveWord('')
         setBoard(data.addGuess.board)
+        if (data.addGuess.board.isComplete) {
+          if (
+            data.addGuess.board.rows.some((row) =>
+              row.cells.every((cell) => cell.status === 'CORRECT')
+            )
+          ) {
+            toast({
+              title: 'You did it!',
+              status: 'success',
+              isClosable: true,
+              position: 'top',
+            })
+          } else {
+            toast({
+              title: 'Oh no. Good try!',
+              status: 'warning',
+              isClosable: true,
+              position: 'top',
+            })
+          }
+        }
       }
     },
   })
