@@ -25,7 +25,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <>
       <VStack spacing={2} h={{ base: '80vh', md: '100vh' }}>
-        <Box bg="gray.300" px="6" py="2" w="full">
+        <Box bg="gray.300" px="6" py="2" w="full" h="56px">
           <HStack justifyContent="space-between">
             <Box display={{ base: 'block', md: 'none' }}>
               <IconButton

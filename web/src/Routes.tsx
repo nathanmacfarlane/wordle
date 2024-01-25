@@ -13,8 +13,8 @@ const Routes = () => {
     <Router useAuth={useAuth}>
       <Route path="/auth" page={AuthPage} name="auth" />
       <PrivateSet wrap={RootLayout} unauthenticated="auth" whileLoadingAuth={FullscreenLoading} whileLoadingPage={FullscreenLoading}>
-        <Route path="/" page={HomePage} name="home" />
-        <Route path="/today" page={TodayPage} name="today" />
+        <Route path="/dashboard" page={HomePage} name="home" />
+        <Route path="/" page={TodayPage} name="today" />
         <Route path="/leagues" page={GroupsPage} name="leagues" />
         <Route path="/leagues/{id}" page={GroupPage} name="league" />
       </PrivateSet>

@@ -3,7 +3,7 @@ import {
   Card,
   CardBody,
   HStack,
-  Spinner,
+  Skeleton,
   Stat,
   StatLabel,
   StatNumber,
@@ -34,7 +34,13 @@ const StatCard: React.FC<StatCardProps> = ({
           <Stat>
             <StatLabel>{label}</StatLabel>
             <StatNumber>
-              {isLoading ? <Spinner /> : value ? value : '-'}
+              {isLoading ? (
+                <Skeleton height="36px" maxW="100px" />
+              ) : value ? (
+                value
+              ) : (
+                '-'
+              )}
             </StatNumber>
           </Stat>
         </HStack>

@@ -23,11 +23,7 @@ const HomePage = () => {
         >
           My Stats
         </Heading>
-        <Stack
-          spacing={4}
-          flexDir={{ base: 'column', sm: 'row' }}
-          w={{ base: 'full', md: 'auto' }}
-        >
+        <Stack spacing={4} flexDir={{ base: 'column', sm: 'row' }} w="full">
           <TotalWordlesCell />
           <WinPercentage />
           <AverageScoreCell />

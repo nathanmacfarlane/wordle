@@ -14,11 +14,9 @@ export const QUERY = gql`
   }
 `
 
-export const Loading = () => (
-  <StatCard label="Win Percentage" isLoading icon={Percent} />
-)
+export const Loading = () => <StatCard label="Wins" isLoading icon={Percent} />
 
-export const Empty = () => <StatCard label="Win Percentage" icon={Percent} />
+export const Empty = () => <StatCard label="Wins" icon={Percent} />
 
 export const Failure = ({
   error,
@@ -34,7 +32,7 @@ export const Success = ({
 >) => {
   return (
     <StatCard
-      label="Win Percentage"
+      label="Wins"
       icon={Percent}
       value={`${winPercentage.toFixed(1)}%`}
     />

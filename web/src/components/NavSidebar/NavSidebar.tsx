@@ -15,7 +15,7 @@ const NavSidebar: React.FC<NavSidebarProps> = ({ onClick }) => {
   const { pathname: activePath } = useLocation()
   const items = useMemo(
     () => [
-      { label: 'Home', icon: Home, route: routes.home() },
+      { label: 'Dashboard', icon: Home, route: routes.home() },
       { label: 'Today', icon: Puzzle, route: routes.today() },
       { label: 'Leagues', icon: Users, route: routes.leagues() },
     ],

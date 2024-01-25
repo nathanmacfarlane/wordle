@@ -1,4 +1,4 @@
-import { Spinner, Text } from '@chakra-ui/react'
+import { Skeleton, Text } from '@chakra-ui/react'
 import type {
   FindTodaysAverageScoreQuery,
   FindTodaysAverageScoreQueryVariables,
@@ -12,7 +12,7 @@ export const QUERY = gql`
   }
 `
 
-export const Loading = () => <Spinner size="sm" />
+export const Loading = () => <Skeleton height="36px" maxW="100px" />
 
 export const Empty = () => <Text>-</Text>
 
