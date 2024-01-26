@@ -80,7 +80,9 @@ export const leaderboard: QueryResolvers['leaderboard'] = async ({
   })
 
   const filteredScores = scores.filter((guess) => {
-    const otherGuesses = scores.filter((g) => g.solutionId === guess.solutionId)
+    const otherGuesses = scores.filter(
+      (g) => g.solutionId === guess.solutionId && guess.userId === g.userId
+    )
     const hasFiveCorrectLetters = otherGuesses.some((g) => g.correctCount === 5)
     return hasFiveCorrectLetters
   })

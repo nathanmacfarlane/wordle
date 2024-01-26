@@ -35,7 +35,7 @@ export const dailyLeaderboard: QueryResolvers['dailyLeaderboard'] = async ({
 
   const filteredGuesses = guesses.filter((guess) => {
     const otherGuesses = guesses.filter(
-      (g) => g.solutionId === guess.solutionId
+      (g) => g.solutionId === guess.solutionId && g.user.id === guess.user.id
     )
     const hasFiveCorrectLetters = otherGuesses.some((g) => g.correctCount === 5)
     return hasFiveCorrectLetters
