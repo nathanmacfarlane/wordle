@@ -47,17 +47,23 @@ export const dailyLeaderboard: QueryResolvers['dailyLeaderboard'] = async ({
     user: guesses[0].user,
   }))
 
-  return results.map((result) => {
-    const newRows = result.board.rows.filter((row) =>
-      row.cells.some((cell) => cell.status !== 'EMPTY')
-    )
-    const newBoard = {
-      ...result.board,
-      rows: newRows,
-    }
-    return {
-      board: newBoard,
-      user: result.user,
-    }
-  })
+  return results
+    .map((result) => {
+      const newRows = result.board.rows.filter((row) =>
+        row.cells.some((cell) => cell.status !== 'EMPTY')
+      )
+      const newBoard = {
+        ...result.board,
+        rows: newRows,
+      }
+      return {
+        board: newBoard,
+        user: result.user,
+      }
+    })
+    .sort((a, b) => {
+      const aLen = a.board.rows.length
+      const bLen = b.board.rows.length
+      return aLen - bLen
+    })
 }
