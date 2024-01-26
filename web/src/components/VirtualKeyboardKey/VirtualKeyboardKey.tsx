@@ -25,6 +25,7 @@ const VirtualKeyboardKey: React.FC<VirtualKeyboardKeyProps> = ({
           ? '#c6b76a'
           : 'gray.300'
       }
+      transition="all 0.2s ease"
       cursor="pointer"
       borderRadius="md"
       width={{

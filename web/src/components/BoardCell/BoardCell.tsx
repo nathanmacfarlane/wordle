@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import {
   Button,
@@ -66,7 +66,17 @@ export const Success = ({
   const [activeWord, setActiveWord] = useState('')
   const [board, setBoard] = useState(initialBoard)
   const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false)
+  const [leaderboardButtonVisible, setIsLeaderboardButtonVisible] =
+    useState(false)
   const toast = useToast()
+
+  useEffect(() => {
+    if (board.isComplete) {
+      setTimeout(() => {
+        setIsLeaderboardButtonVisible(true)
+      }, 500)
+    }
+  }, [board.isComplete])
 
   const [addGuess, { loading: isSubmitting }] = useAddGuess({
     onCompleted: (data) => {
@@ -165,16 +175,17 @@ export const Success = ({
       )}
       <VStack w="auto" h="100%" justifyContent="space-between" py="4">
         <Text>{format(addDays(board.date, 1), 'MMM d')}</Text>
-        {board.isComplete && (
-          <Button
-            variant="outline"
-            aria-label="Daily Leaderboard"
-            rightIcon={<Medal size={22} />}
-            onClick={() => setIsLeaderboardOpen(true)}
-          >
-            Leaderboard
-          </Button>
-        )}
+        <Button
+          visibility={leaderboardButtonVisible ? undefined : 'hidden'}
+          opacity={leaderboardButtonVisible ? 100 : 0}
+          transition="opacity 0.5s ease"
+          variant="outline"
+          aria-label="Daily Leaderboard"
+          rightIcon={<Medal size={22} />}
+          onClick={() => setIsLeaderboardOpen(true)}
+        >
+          Leaderboard
+        </Button>
         <VStack spacing={1}>
           {boardRows.map((row, index) => (
             <BoardRowView key={index} boardRow={row} />
