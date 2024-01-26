@@ -16,8 +16,10 @@ const WordleCell: React.FC<WordleCellProps> = ({
   size,
   triggerFlip,
 }) => {
-  const [flipped, setFlipped] = useState(false)
-  const [animationComplete, setAnimationComplete] = useState(false)
+  const [flipped, setFlipped] = useState(size === 'sm' ? true : false)
+  const [animationComplete, setAnimationComplete] = useState(
+    size === 'sm' ? true : false
+  )
 
   const bg = !animationComplete
     ? undefined
