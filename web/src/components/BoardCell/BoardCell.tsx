@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 
 import { Center, Spinner, Text, VStack, useToast } from '@chakra-ui/react'
-import { format } from 'date-fns'
+import { addDays, format } from 'date-fns'
 import type {
   BoardCell,
   FindBoardQuery,
@@ -145,7 +145,7 @@ export const Success = ({
 
   return (
     <VStack w="auto" h="100%" justifyContent="space-between" py="4">
-      <Text>{format(new Date(), 'MMM d')}</Text>
+      <Text>{format(addDays(board.date, 1), 'MMM d')}</Text>
       <VStack spacing={1}>
         {boardRows.map((row, index) => (
           <BoardRowView key={index} boardRow={row} />

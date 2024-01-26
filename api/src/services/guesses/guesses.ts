@@ -23,3 +23,25 @@ export const todaysAverageScore: QueryResolvers['todaysAverageScore'] =
 
     return userNthGuesses._avg.nthGuess
   }
+
+export const history: QueryResolvers['history'] = async () => {
+  const { id: userId } = getAuthedUser()
+
+  const userGuesses = await db.guess.findMany({
+    where: {
+      userId,
+      correctCount: 5,
+    },
+    include: { solution: true },
+    orderBy: { solution: { date: 'desc' } },
+    take: 10,
+  })
+
+  return userGuesses.map(
+    ({ solution: { date, word: solution }, nthGuess }) => ({
+      date,
+      solution,
+      score: nthGuess,
+    })
+  )
+}
