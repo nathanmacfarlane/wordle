@@ -156,11 +156,13 @@ export const Success = ({
 
   return (
     <>
-      <DailyLeaderboard
-        date={queryResult?.variables?.date || ''}
-        isOpen={isLeaderboardOpen}
-        onClose={() => setIsLeaderboardOpen(false)}
-      />
+      {queryResult?.variables?.date && (
+        <DailyLeaderboard
+          date={queryResult.variables.date}
+          isOpen={isLeaderboardOpen}
+          onClose={() => setIsLeaderboardOpen(false)}
+        />
+      )}
       <VStack w="auto" h="100%" justifyContent="space-between" py="4">
         <Text>{format(addDays(board.date, 1), 'MMM d')}</Text>
         {board.isComplete && (
