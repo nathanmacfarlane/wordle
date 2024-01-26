@@ -51,9 +51,7 @@ export const Success = ({
 }: CellSuccessProps<FindHistoryQuery, FindHistoryQueryVariables>) => {
   return (
     <Table variant="simple" size="sm">
-      <TableCaption>
-        History of your games. The score is the number of guesses it took.
-      </TableCaption>
+      <TableCaption>History of your games.</TableCaption>
       <Thead>
         <Tr>
           <Th>Date</Th>
