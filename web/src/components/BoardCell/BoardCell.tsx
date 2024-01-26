@@ -163,14 +163,16 @@ export const Success = ({
       />
       <VStack w="auto" h="100%" justifyContent="space-between" py="4">
         <Text>{format(addDays(board.date, 1), 'MMM d')}</Text>
-        <Button
-          variant="outline"
-          aria-label="Daily Leaderboard"
-          rightIcon={<Medal size={22} />}
-          onClick={() => setIsLeaderboardOpen(true)}
-        >
-          Leaderboard
-        </Button>
+        {board.isComplete && (
+          <Button
+            variant="outline"
+            aria-label="Daily Leaderboard"
+            rightIcon={<Medal size={22} />}
+            onClick={() => setIsLeaderboardOpen(true)}
+          >
+            Leaderboard
+          </Button>
+        )}
         <VStack spacing={1}>
           {boardRows.map((row, index) => (
             <BoardRowView key={index} boardRow={row} />
