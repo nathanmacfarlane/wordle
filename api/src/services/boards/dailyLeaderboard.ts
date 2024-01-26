@@ -20,6 +20,7 @@ export const dailyLeaderboard: QueryResolvers['dailyLeaderboard'] = async ({
         misplacedCount: true,
         incorrectCount: true,
         user: true,
+        solutionId: true,
       },
     }),
     db.solution.findFirstOrThrow({
@@ -32,7 +33,15 @@ export const dailyLeaderboard: QueryResolvers['dailyLeaderboard'] = async ({
     }),
   ])
 
-  const groupedByUser = guesses.reduce((acc, guess) => {
+  const filteredGuesses = guesses.filter((guess) => {
+    const otherGuesses = guesses.filter(
+      (g) => g.solutionId === guess.solutionId
+    )
+    const hasFiveCorrectLetters = otherGuesses.some((g) => g.correctCount === 5)
+    return hasFiveCorrectLetters
+  })
+
+  const groupedByUser = filteredGuesses.reduce((acc, guess) => {
     const userId = guess.user.id
     if (acc[userId]) {
       acc[userId].push(guess)
@@ -40,7 +49,7 @@ export const dailyLeaderboard: QueryResolvers['dailyLeaderboard'] = async ({
       acc[userId] = [guess]
     }
     return acc
-  }, {} as Record<string, typeof guesses>)
+  }, {} as Record<string, typeof filteredGuesses>)
 
   const results = Object.values(groupedByUser).map((guesses) => ({
     board: buildBoard(date, solution, guesses, true),

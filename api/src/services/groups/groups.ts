@@ -79,7 +79,13 @@ export const leaderboard: QueryResolvers['leaderboard'] = async ({
     include: { user: true },
   })
 
-  const scoresByUser = scores.reduce((acc, score) => {
+  const filteredScores = scores.filter((guess) => {
+    const otherGuesses = scores.filter((g) => g.solutionId === guess.solutionId)
+    const hasFiveCorrectLetters = otherGuesses.some((g) => g.correctCount === 5)
+    return hasFiveCorrectLetters
+  })
+
+  const scoresByUser = filteredScores.reduce((acc, score) => {
     const existingScore = acc.find((s) => s.user.id === score.userId)
     if (existingScore) {
       existingScore.score += 1
