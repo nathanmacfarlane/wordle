@@ -1,7 +1,15 @@
 import { useMemo, useState } from 'react'
 
-import { Center, Spinner, Text, VStack, useToast } from '@chakra-ui/react'
+import {
+  Button,
+  Center,
+  Spinner,
+  Text,
+  VStack,
+  useToast,
+} from '@chakra-ui/react'
 import { addDays, format } from 'date-fns'
+import { Medal } from 'lucide-react'
 import type {
   BoardCell,
   FindBoardQuery,
@@ -14,6 +22,7 @@ import { useAddGuess } from 'src/requests/useAddGuess'
 import { padEnd } from 'src/utils/array'
 
 import BoardRowView from '../BoardRow/BoardRow'
+import DailyLeaderboard from '../DailyLeaderboard/DailyLeaderboard'
 import VirtualKeyboard from '../VirtualKeyboard/VirtualKeyboard'
 
 export const QUERY = gql`
@@ -52,9 +61,11 @@ export const Failure = ({
 
 export const Success = ({
   board: initialBoard,
+  queryResult,
 }: CellSuccessProps<FindBoardQuery, FindBoardQueryVariables>) => {
   const [activeWord, setActiveWord] = useState('')
   const [board, setBoard] = useState(initialBoard)
+  const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false)
   const toast = useToast()
 
   const [addGuess, { loading: isSubmitting }] = useAddGuess({
@@ -144,18 +155,33 @@ export const Success = ({
   }, [activeWord, board.rows])
 
   return (
-    <VStack w="auto" h="100%" justifyContent="space-between" py="4">
-      <Text>{format(addDays(board.date, 1), 'MMM d')}</Text>
-      <VStack spacing={1}>
-        {boardRows.map((row, index) => (
-          <BoardRowView key={index} boardRow={row} />
-        ))}
-      </VStack>
-      <VirtualKeyboard
-        onPress={handleKeyPress}
-        isSubmitting={isSubmitting}
-        keyStatuses={board.keyboard}
+    <>
+      <DailyLeaderboard
+        date={queryResult?.variables?.date || ''}
+        isOpen={isLeaderboardOpen}
+        onClose={() => setIsLeaderboardOpen(false)}
       />
-    </VStack>
+      <VStack w="auto" h="100%" justifyContent="space-between" py="4">
+        <Text>{format(addDays(board.date, 1), 'MMM d')}</Text>
+        <Button
+          variant="outline"
+          aria-label="Daily Leaderboard"
+          rightIcon={<Medal size={22} />}
+          onClick={() => setIsLeaderboardOpen(true)}
+        >
+          Leaderboard
+        </Button>
+        <VStack spacing={1}>
+          {boardRows.map((row, index) => (
+            <BoardRowView key={index} boardRow={row} />
+          ))}
+        </VStack>
+        <VirtualKeyboard
+          onPress={handleKeyPress}
+          isSubmitting={isSubmitting}
+          keyStatuses={board.keyboard}
+        />
+      </VStack>
+    </>
   )
 }

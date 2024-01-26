@@ -7,7 +7,6 @@ export type BoardPageProps = {
 }
 
 const BoardPage: React.FC<BoardPageProps> = ({ date }) => {
-  console.log('date: ', date)
   return (
     <>
       <Metadata title="Board" description="Board page" />

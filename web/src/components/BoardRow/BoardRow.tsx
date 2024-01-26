@@ -5,9 +5,10 @@ import WordleCell from '../WordleCell/WordleCell'
 
 export type BoardRowProps = {
   boardRow: BoardRow
+  size?: 'sm' | 'default'
 }
 
-const BoardRowView: React.FC<BoardRowProps> = ({ boardRow }) => {
+const BoardRowView: React.FC<BoardRowProps> = ({ boardRow, size }) => {
   return (
     <HStack spacing="1px">
       {boardRow.cells.map((cell, index) => {
@@ -16,6 +17,7 @@ const BoardRowView: React.FC<BoardRowProps> = ({ boardRow }) => {
             key={index}
             value={cell.letter || undefined}
             status={cell.status}
+            size={size}
           />
         )
       })}

@@ -33,11 +33,17 @@ export const schema = gql`
     error: String
   }
 
+  type DailyLeaderboard {
+    board: Board!
+    user: User!
+  }
+
   type Mutation {
     addGuess(date: Date!, word: String!): AddGuessResponse! @requireAuth
   }
 
   type Query {
     board(date: Date!): Board! @requireAuth
+    dailyLeaderboard(date: Date!): [DailyLeaderboard!]! @requireAuth
   }
 `

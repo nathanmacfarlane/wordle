@@ -44,9 +44,12 @@ export const board: QueryResolvers['board'] = async ({ date }) => {
 export const buildBoard = (
   date: NonNullable<string | Date>,
   solution: string,
-  guesses: Guess[]
+  guesses: Guess[],
+  hideLetters = false
 ): Board => {
-  const rows = guesses.map(({ word: guess }) => getRowData(solution, guess))
+  const rows = guesses.map(({ word: guess }) =>
+    getRowData(solution, guess, hideLetters)
+  )
 
   const paddedRows = padEnd(rows, 6, {
     cells: [
@@ -102,13 +105,21 @@ export const buildBoard = (
   }
 }
 
-const getRowData = (solution: string, guess?: string): BoardRow => {
-  const cells = gatherCells(solution, guess || '')
+const getRowData = (
+  solution: string,
+  guess?: string,
+  hideLetters?: boolean
+): BoardRow => {
+  const cells = gatherCells(solution, guess || '', hideLetters)
 
   return cells
 }
 
-const gatherCells = (solution: string, guess: string): BoardRow => {
+const gatherCells = (
+  solution: string,
+  guess: string,
+  hideLetters?: boolean
+): BoardRow => {
   const cells: { letter: string; status: BoardCellStatus }[] = []
 
   // Check for correct letters at correct positions
@@ -142,5 +153,9 @@ const gatherCells = (solution: string, guess: string): BoardRow => {
     }
   }
 
-  return { cells }
+  const mutatedCells = hideLetters
+    ? cells.map(({ status }) => ({ status }))
+    : cells
+
+  return { cells: mutatedCells }
 }

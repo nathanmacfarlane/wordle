@@ -4,9 +4,10 @@ import { BoardCellStatus } from 'types/graphql'
 export type WordleCellProps = {
   value?: string
   status: BoardCellStatus
+  size?: 'sm' | 'default'
 }
 
-const WordleCell: React.FC<WordleCellProps> = ({ value, status }) => {
+const WordleCell: React.FC<WordleCellProps> = ({ value, status, size }) => {
   const bg =
     status === 'CORRECT'
       ? '#7eab70'
@@ -20,12 +21,11 @@ const WordleCell: React.FC<WordleCellProps> = ({ value, status }) => {
 
   const outline = status === 'EMPTY' ? '1px solid #7a7b7e' : undefined
 
+  const wrapperSize =
+    size === 'sm' ? { base: '20px', md: '30px' } : { base: '50px', md: '60px' }
+
   return (
-    <Box
-      w={{ base: '50px', md: '60px' }}
-      h={{ base: '50px', md: '60px' }}
-      p="1"
-    >
+    <Box w={wrapperSize} h={wrapperSize} p={size === 'sm' ? '0.5' : '1'}>
       <Box
         bg={bg}
         outline={outline}
