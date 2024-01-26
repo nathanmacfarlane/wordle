@@ -1,9 +1,10 @@
 import { Metadata } from '@redwoodjs/web'
 
 import BoardCell from 'src/components/BoardCell'
+import { getLocalDateIsoString } from 'src/utils/getLocalDate'
 
 const TodayPage = () => {
-  const todayString = new Date().toISOString().split('T')[0]
+  const todayString = getLocalDateIsoString()
   return (
     <>
       <Metadata title="Today" description="Today page" />
