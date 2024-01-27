@@ -1,4 +1,12 @@
-import { Center, SimpleGrid, Spinner, Text, VStack } from '@chakra-ui/react'
+import {
+  Center,
+  HStack,
+  Image,
+  SimpleGrid,
+  Spinner,
+  Text,
+  VStack,
+} from '@chakra-ui/react'
 import type {
   FindDailyLeaderboardQuery,
   FindDailyLeaderboardQueryVariables,
@@ -55,14 +63,20 @@ export const Success = ({
 >) => {
   return (
     <SimpleGrid columns={dailyLeaderboard.length <= 1 ? 1 : 2} spacing={4}>
-      {dailyLeaderboard.map(({ board, user }) => (
-        <VStack spacing={0.4} key={user.id}>
-          <Text fontWeight="bold">{user.name}</Text>
-          {board.rows.map((row, index) => (
-            <BoardRowView key={index} boardRow={row} size="sm" />
-          ))}
-        </VStack>
-      ))}
+      {dailyLeaderboard.map(({ board, user }) => {
+        const firstName = user.name.split(' ')[0]
+        return (
+          <VStack spacing={0.4} key={user.id}>
+            <HStack>
+              <Image src={user.imageUrl} borderRadius="full" boxSize="30px" />
+              <Text fontWeight="bold">{firstName}</Text>
+            </HStack>
+            {board.rows.map((row, index) => (
+              <BoardRowView key={index} boardRow={row} size="sm" />
+            ))}
+          </VStack>
+        )
+      })}
     </SimpleGrid>
   )
 }
