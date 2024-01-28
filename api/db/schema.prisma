@@ -19,12 +19,36 @@ model User {
   id      String @id @default(uuid())
   name    String
   email   String  @unique
-  guesses Guess[]
-  groups  Group[]
+
+  guesses       Guess[]
+  groups        Group[]
+  earnedBadges  EarnedBadge[]
 
   timezone String?
 
   imageUrl String
+}
+
+model EarnedBadge {
+  id      String @id @default(uuid())
+  userId  String
+  badge   Badge
+
+  firstReceived DateTime
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum Badge {
+  monthly_winner
+  win_streak_5_days
+  win_streak_3_days
+  monthly_avg_3
+  monthly_avg_4
+  weekly_avg_4
+  weekly_avg_3
+  guess_in_1
+  guess_in_2
 }
 
 model Guess {

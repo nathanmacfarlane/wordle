@@ -1,4 +1,5 @@
 import type {
+  Badge,
   BadgeInfo,
   MutationResolvers,
   QueryResolvers,
@@ -14,27 +15,51 @@ export const profile: QueryResolvers['profile'] = async ({ id }) => {
     where: { id: userId },
   })
 
-  const [totalWordlesResult, winPercentageResult, averageScoreResult] =
-    await Promise.all([
-      totalWordles({ id: userId }),
-      winPercentage({ id: userId }),
-      averageScore({ id: userId }),
-    ])
+  const [
+    totalWordlesResult,
+    winPercentageResult,
+    averageScoreResult,
+    earnedBadges,
+  ] = await Promise.all([
+    totalWordles({ id: userId }),
+    winPercentage({ id: userId }),
+    averageScore({ id: userId }),
+    db.earnedBadge.findMany({
+      where: { userId },
+      orderBy: { firstReceived: 'desc' },
+    }),
+  ])
 
-  const badges = [
-    {
-      badge: 'monthly_winner',
-      title: 'Monthly Winner',
-      firstReceived: new Date('2021-06-01'),
-    },
-    {
-      badge: 'guess_in_2',
-      title: 'Guess in 2',
-      firstReceived: new Date('2023-07-14'),
-    },
-  ].sort(
-    (a, b) => b.firstReceived.getTime() - a.firstReceived.getTime()
-  ) as BadgeInfo[]
+  const badgeTitle = (badge: Badge) => {
+    switch (badge) {
+      case 'guess_in_1':
+        return 'First Try'
+      case 'guess_in_2':
+        return 'Second Try'
+      case 'monthly_winner':
+        return 'Monthly Winner'
+      case 'monthly_avg_3':
+        return 'Monthly Average of 3'
+      case 'monthly_avg_4':
+        return 'Monthly Average of 4'
+      case 'weekly_avg_3':
+        return 'Weekly Average of 3'
+      case 'weekly_avg_4':
+        return 'Weekly Average of 4'
+      case 'win_streak_3_days':
+        return '3 Day Win Streak'
+      case 'win_streak_5_days':
+        return '5 Day Win Streak'
+    }
+  }
+
+  const badges: BadgeInfo[] = earnedBadges.map(({ badge, firstReceived }) => {
+    return {
+      badge,
+      title: badgeTitle(badge),
+      firstReceived,
+    }
+  })
 
   return {
     ...user,
