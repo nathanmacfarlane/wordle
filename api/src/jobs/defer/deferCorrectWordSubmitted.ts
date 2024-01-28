@@ -34,7 +34,3 @@ export default defer(deferCorrectWordSubmitted)
 //   return 'Weekly Average of 3'
 // case 'weekly_avg_4':
 //   return 'Weekly Average of 4'
-// case 'win_streak_3_days':
-//   return '3 Day Win Streak'
-// case 'win_streak_5_days':
-//   return '5 Day Win Streak'
