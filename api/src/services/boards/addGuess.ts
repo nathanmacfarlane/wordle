@@ -1,5 +1,6 @@
 import { MutationResolvers } from 'types/graphql'
 
+import deferCorrectWordSubmitted from 'src/jobs/defer/deferCorrectWordSubmitted'
 import { getAuthedUser } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 import { VALID_WORDS } from 'src/lib/validWords'
@@ -81,6 +82,10 @@ export const addGuess: MutationResolvers['addGuess'] = async ({
         ...stats,
       },
     })
+
+    if (newGuess.correctCount === 5) {
+      await deferCorrectWordSubmitted({ userId, nthGuess })
+    }
 
     return {
       board: buildBoard(date, solution.word, [...guesses, newGuess]),

@@ -37,6 +37,8 @@ model EarnedBadge {
   firstReceived DateTime
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, badge])
 }
 
 enum Badge {
