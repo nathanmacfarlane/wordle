@@ -83,13 +83,13 @@ export const Success = ({
         </Stat>
       </HStack>
       <Divider />
-      <VStack alignItems="start">
+      <VStack alignItems="start" w="full">
         <Heading size="md" fontWeight="semibold">
           Badges
         </Heading>
         <HStack
           overflowX="scroll"
-          w="96vw"
+          w="full"
           bg="gray.200"
           pt="3"
           rounded="md"
