@@ -94,6 +94,12 @@ const deferEndOfMonth = async () => {
       })
     })
   )
+
+  return {
+    lastMonthWinners: lastMonthWinners.map((winner) => winner.userId),
+    usersWithAvg4: usersWithAvg4.map((user) => user.userId),
+    usersWithAvg3: usersWithAvg3.map((user) => user.userId),
+  }
 }
 
 // setup cron that runs 12 hours after the start of a month
