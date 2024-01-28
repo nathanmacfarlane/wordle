@@ -90,6 +90,11 @@ const deferEndOfDay = async () => {
       })
     })
   )
+
+  return {
+    threeDayStreakWinners: threeDayStreakWinners.map((winner) => winner.userId),
+    fiveDayStreakWinners: fiveDayStreakWinners.map((winner) => winner.userId),
+  }
 }
 
 // setup cron that runs 6 hours after the start of every day
