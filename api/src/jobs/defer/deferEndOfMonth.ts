@@ -13,7 +13,7 @@ const deferEndOfMonth = async () => {
     by: ['userId'],
     _avg: { nthGuess: true },
     where: { correctCount: 5, solution: { date: { gte: som, lte: eom } } },
-    orderBy: { _avg: { nthGuess: 'desc' } },
+    orderBy: { _avg: { nthGuess: 'asc' } },
   })
 
   // find all users with the same average score as the top monthly leader
