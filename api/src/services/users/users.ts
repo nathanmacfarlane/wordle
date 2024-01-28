@@ -1,10 +1,52 @@
-import type { MutationResolvers, QueryResolvers } from 'types/graphql'
+import type {
+  BadgeInfo,
+  MutationResolvers,
+  QueryResolvers,
+} from 'types/graphql'
 
 import { getAuthedUser } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 
-export const totalWordles: QueryResolvers['totalWordles'] = async () => {
-  const { id: userId } = getAuthedUser()
+export const profile: QueryResolvers['profile'] = async ({ id }) => {
+  const userId = id || getAuthedUser().id
+
+  const user = await db.user.findUniqueOrThrow({
+    where: { id: userId },
+  })
+
+  const [totalWordlesResult, winPercentageResult, averageScoreResult] =
+    await Promise.all([
+      totalWordles({ id: userId }),
+      winPercentage({ id: userId }),
+      averageScore({ id: userId }),
+    ])
+
+  const badges = [
+    {
+      badge: 'monthly_winner',
+      title: 'Monthly Winner',
+      firstReceived: new Date('2021-06-01'),
+    },
+    {
+      badge: 'guess_in_2',
+      title: 'Guess in 2',
+      firstReceived: new Date('2023-07-14'),
+    },
+  ].sort(
+    (a, b) => b.firstReceived.getTime() - a.firstReceived.getTime()
+  ) as BadgeInfo[]
+
+  return {
+    ...user,
+    totalWordles: totalWordlesResult,
+    winPercentage: winPercentageResult,
+    averageScore: averageScoreResult,
+    badges,
+  }
+}
+
+export const totalWordles: QueryResolvers['totalWordles'] = async ({ id }) => {
+  const userId = id || getAuthedUser().id
 
   const allWordles = await db.guess.groupBy({
     by: ['solutionId'],
@@ -14,8 +56,10 @@ export const totalWordles: QueryResolvers['totalWordles'] = async () => {
   return allWordles.length
 }
 
-export const winPercentage: QueryResolvers['winPercentage'] = async () => {
-  const { id: userId } = getAuthedUser()
+export const winPercentage: QueryResolvers['winPercentage'] = async ({
+  id,
+}) => {
+  const userId = id || getAuthedUser().id
 
   const allWordles = await db.guess.groupBy({
     by: ['solutionId'],
@@ -35,8 +79,8 @@ export const winPercentage: QueryResolvers['winPercentage'] = async () => {
   return (numWins / totalWordles) * 100
 }
 
-export const averageScore: QueryResolvers['averageScore'] = async () => {
-  const { id: userId } = getAuthedUser()
+export const averageScore: QueryResolvers['averageScore'] = async ({ id }) => {
+  const userId = id || getAuthedUser().id
 
   const guessAggregate = await db.guess.aggregate({
     where: { userId, correctCount: 5 },

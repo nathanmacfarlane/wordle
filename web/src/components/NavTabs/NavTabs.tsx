@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 import { HStack, Text } from '@chakra-ui/react'
-import { Home, Puzzle, Users } from 'lucide-react'
+import { Puzzle, User, Users } from 'lucide-react'
 
 import { navigate, routes, useLocation } from '@redwoodjs/router'
 
@@ -12,7 +12,7 @@ const NavTabs = () => {
 
   const items = useMemo(
     () => [
-      { label: 'Home', icon: Home, route: routes.home() },
+      { label: 'Profile', icon: User, route: routes.profile() },
       { label: 'Today', icon: Puzzle, route: routes.today() },
       { label: 'Leagues', icon: Users, route: routes.leagues() },
     ],
