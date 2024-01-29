@@ -23,6 +23,7 @@ model User {
   guesses       Guess[]
   groups        Group[]
   earnedBadges  EarnedBadge[]
+  monthlyWins   MonthlyWin[]
 
   timezone String?
 
@@ -67,6 +68,18 @@ model Guess {
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model MonthlyWin {
+  id        String @id @default(uuid())
+  userId    String
+  month     Int
+  year      Int
+  avgScore  Float
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, month, year])
 }
 
 model Group {

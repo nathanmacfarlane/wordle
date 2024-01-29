@@ -1,39 +1,49 @@
 import { QueryResolvers } from 'types/graphql'
 
+import { db } from 'src/lib/db'
+
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
+
 export const hallOfFame: QueryResolvers['hallOfFame'] = async () => {
-  return [
-    {
-      month: 'March',
-      year: '2024',
-      avgScore: 3.23,
-      user: {
-        id: '1',
-        name: 'Matt Macfarlane',
-        email: 'mattmacfarlane@gmail.com',
-        imageUrl: 'https://avatars.githubusercontent.com/u/10000000?v=4',
-      },
+  const monthlyWins = await db.monthlyWin.findMany({
+    include: {
+      user: true,
     },
-    {
-      month: 'February',
-      year: '2024',
-      avgScore: 3.15,
-      user: {
-        id: '1',
-        name: 'Matt Macfarlane',
-        email: 'mattmacfarlane@gmail.com',
-        imageUrl: 'https://avatars.githubusercontent.com/u/10000000?v=4',
+    orderBy: [
+      {
+        year: 'desc',
       },
-    },
-    {
-      month: 'January',
-      year: '2024',
-      avgScore: 2.89,
-      user: {
-        id: '2',
-        name: 'Nate Macfarlane',
-        email: 'nathanmmacfarlane@gmail.com',
-        imageUrl: 'https://avatars.githubusercontent.com/u/10000000?v=4',
+      {
+        month: 'desc',
       },
-    },
-  ]
+    ],
+  })
+
+  return monthlyWins.map((monthlyWin) => {
+    const month = MONTHS[monthlyWin.month]
+    return {
+      month,
+      year: monthlyWin.year.toString(),
+      avgScore: monthlyWin.avgScore,
+      user: {
+        id: monthlyWin.user.id,
+        name: monthlyWin.user.name,
+        email: monthlyWin.user.email,
+        imageUrl: monthlyWin.user.imageUrl,
+      },
+    }
+  })
 }

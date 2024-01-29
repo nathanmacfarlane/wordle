@@ -21,7 +21,10 @@ const deferEndOfMonth = async () => {
     userAggregate.length === 0
       ? []
       : userAggregate.filter((user) => {
-          return user._avg.nthGuess === userAggregate[0]._avg.nthGuess
+          return (
+            user._avg.nthGuess &&
+            user._avg.nthGuess === userAggregate[0]._avg.nthGuess
+          )
         })
 
   // give the monthly_winner badge to identified users
@@ -44,6 +47,15 @@ const deferEndOfMonth = async () => {
       })
     })
   )
+
+  await db.monthlyWin.createMany({
+    data: lastMonthWinners.map((winner) => ({
+      month: lastMonth.getMonth(),
+      year: lastMonth.getFullYear(),
+      avgScore: winner._avg.nthGuess!,
+      userId: winner.userId,
+    })),
+  })
 
   const usersWithAvg4 = userAggregate.filter(
     (user) => user._avg.nthGuess && user._avg.nthGuess <= 4
