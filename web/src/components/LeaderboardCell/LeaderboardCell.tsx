@@ -20,6 +20,8 @@ import type {
 import { navigate, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
+import LeaderboardWinners from '../LeaderboardWinners/LeaderboardWinners'
+
 export const QUERY = gql`
   query FindLeaderboardQuery($date: DateTime) {
     leaderboard(date: $date) {
@@ -59,6 +61,13 @@ export const Success = ({
 }: CellSuccessProps<FindLeaderboardQuery, FindLeaderboardQueryVariables>) => {
   return (
     <VStack alignItems="start">
+      <LeaderboardWinners
+        winners={leaderboard.map((leader) => ({
+          name: leader.user.name,
+          imageUrl: leader.user.imageUrl,
+          score: leader.averageScore,
+        }))}
+      />
       <Table variant="simple" size="sm">
         <TableCaption>
           Month of {new Date().toLocaleString('default', { month: 'long' })}
