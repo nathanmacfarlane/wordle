@@ -29,8 +29,3 @@ const deferCorrectWordSubmitted = async (
 }
 
 export default defer(deferCorrectWordSubmitted)
-
-// case 'weekly_avg_3':
-//   return 'Weekly Average of 3'
-// case 'weekly_avg_4':
-//   return 'Weekly Average of 4'

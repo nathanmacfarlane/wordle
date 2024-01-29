@@ -102,5 +102,5 @@ const deferEndOfMonth = async () => {
   }
 }
 
-// setup cron that runs 12 hours after the start of a month
-export default defer.cron(deferEndOfMonth, '0 12 1 * *')
+// setup cron that runs 6 hours after the start of a month
+export default defer.cron(deferEndOfMonth, '0 6 1 * *')
