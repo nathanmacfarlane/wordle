@@ -17,6 +17,7 @@ const Routes = () => {
       <PrivateSet wrap={RootLayout} unauthenticated="auth" whileLoadingAuth={FullscreenLoading} whileLoadingPage={FullscreenLoading}>
         <Route path="/" page={TodayPage} name="today" />
         <Route path="/profile" page={ProfilePage} name="profile" />
+        <Route path="/profile/{id}" page={ProfilePage} name="user-profile" />
         <Route path="/history" page={HistoryPage} name="history" />
         <Route path="/leaderboard" page={LeaderboardPage} name="leaderboard" />
         <Route path="/leagues" page={GroupsPage} name="leagues" />

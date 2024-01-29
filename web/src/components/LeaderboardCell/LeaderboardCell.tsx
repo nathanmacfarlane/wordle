@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Button,
   Center,
   Spinner,
   Table,
@@ -16,6 +17,7 @@ import type {
   FindLeaderboardQueryVariables,
 } from 'types/graphql'
 
+import { navigate, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 export const QUERY = gql`
@@ -74,7 +76,18 @@ export const Success = ({
             <Tr key={user.id}>
               <Td display="flex" alignItems="center">
                 <Avatar size="sm" name={user.name} src={user.imageUrl} mr="2" />
-                {user.name.split(' ')[0]}
+                <Button
+                  variant="link"
+                  color="blue.400"
+                  size="sm"
+                  textUnderlineOffset={5}
+                  textDecoration="underline"
+                  onClick={() => {
+                    navigate(routes.profile({ id: user.id }))
+                  }}
+                >
+                  {user.name.split(' ')[0]}
+                </Button>
               </Td>
               <Td isNumeric>{averageScore.toFixed(2)}</Td>
               <Td isNumeric>{score}</Td>
