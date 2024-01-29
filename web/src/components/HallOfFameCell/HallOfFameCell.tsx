@@ -59,7 +59,7 @@ export const Success = ({
     <Table variant="simple" size="sm">
       <Thead>
         <Tr>
-          <Th>Month</Th>
+          <Th w="150px">Month</Th>
           <Th>Winner</Th>
           <Th isNumeric>Average Score</Th>
         </Tr>
@@ -67,9 +67,14 @@ export const Success = ({
       <Tbody>
         {hallOfFame.map(({ user, avgScore, month, year }) => (
           <Tr key={user.id}>
-            <Td>{`${month}, ${year}`}</Td>
+            <Td>{`${month} ${year}`}</Td>
             <Td display="flex" alignItems="center">
-              <Avatar size="sm" name={user.name} src={user.imageUrl} mr="2" />
+              <Avatar
+                size="sm"
+                name={user.name.split(' ')[0]}
+                src={user.imageUrl}
+                mr="2"
+              />
               <Button
                 variant="link"
                 color="blue.400"
