@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 import { VStack } from '@chakra-ui/react'
-import { Medal, Puzzle, ScrollText, User } from 'lucide-react'
+import { Award, Medal, Puzzle, ScrollText, User } from 'lucide-react'
 
 import { routes, useLocation } from '@redwoodjs/router'
 
@@ -19,6 +19,7 @@ const NavSidebar: React.FC<NavSidebarProps> = ({ onClick }) => {
       { label: 'Today', icon: Puzzle, route: routes.today() },
       { label: 'History', icon: ScrollText, route: routes.history() },
       { label: 'Leaderboard', icon: Medal, route: routes.leaderboard() },
+      { label: 'Hall of Fame', icon: Award, route: routes.hallOfFame() },
     ],
     []
   )

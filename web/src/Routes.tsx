@@ -23,6 +23,7 @@ const Routes = () => {
         <Route path="/leagues" page={GroupsPage} name="leagues" />
         <Route path="/leagues/{id}" page={GroupPage} name="league" />
         <Route path="/board/{date}" page={BoardPage} name="board" />
+        <Route path="/hall-of-fame" page={HallOfFamePage} name="hallOfFame" />
       </PrivateSet>
       <Route notfound page={NotFoundPage} />
     </Router>
