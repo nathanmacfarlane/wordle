@@ -120,42 +120,59 @@ const gatherCells = (
   guess: string,
   hideLetters?: boolean
 ): BoardRow => {
-  const cells: { letter: string; status: BoardCellStatus }[] = []
+  const cells: { letter?: string; status: BoardCellStatus }[] = wordle(
+    guess,
+    solution
+  ).map((statuses, index) => {
+    if (hideLetters) {
+      return { status: statuses }
+    }
+    return { letter: guess[index], status: statuses }
+  })
 
-  // Check for correct letters at correct positions
-  for (let i = 0; i < solution.length; i++) {
-    if (solution[i] === guess[i]) {
-      cells.push({ letter: guess[i], status: 'CORRECT' })
+  return { cells }
+}
+
+const wordle = (guess: string, solution: string): BoardCellStatus[] => {
+  const splitSolution = solution.split('')
+  const splitGuess = guess.split('')
+
+  const solutionCharsTaken = splitSolution.map((_) => false)
+
+  const statuses: BoardCellStatus[] = Array.from(Array(guess.length))
+
+  // Correct Cases
+  splitGuess.forEach((letter, i) => {
+    if (letter === splitSolution[i]) {
+      statuses[i] = 'CORRECT'
+      solutionCharsTaken[i] = true
+      return
+    }
+  })
+
+  // Absent Cases
+  splitGuess.forEach((letter, i) => {
+    if (statuses[i]) return
+
+    if (!splitSolution.includes(letter)) {
+      statuses[i] = 'INCORRECT'
+      return
+    }
+
+    // Present Cases
+    const indexOfPresentChar = splitSolution.findIndex(
+      (x, index) => x === letter && !solutionCharsTaken[index]
+    )
+
+    if (indexOfPresentChar > -1) {
+      statuses[i] = 'MISPLACED'
+      solutionCharsTaken[indexOfPresentChar] = true
+      return
     } else {
-      cells.push({ letter: guess[i], status: 'INCORRECT' })
+      statuses[i] = 'INCORRECT'
+      return
     }
-  }
+  })
 
-  // Check for correct letters at incorrect positions
-  for (let i = 0; i < solution.length; i++) {
-    // the guess letter in this position exists elsewhere in the solution
-    if (solution[i] !== guess[i] && solution.includes(guess[i])) {
-      // find all other indexes of this letter
-      const otherIndexes = solution.split('').reduce((acc, letter, index) => {
-        if (letter === guess[i]) {
-          acc.push(index)
-        }
-        return acc
-      }, [] as number[])
-      // if some letter exists in the solution and does not match
-      // the guess letter in that position, it is misplaced
-      const isMisplaced = otherIndexes.some(
-        (index) => solution[index] !== guess[index]
-      )
-      if (isMisplaced) {
-        cells[i] = { letter: guess[i], status: 'MISPLACED' }
-      }
-    }
-  }
-
-  const mutatedCells = hideLetters
-    ? cells.map(({ status }) => ({ status }))
-    : cells
-
-  return { cells: mutatedCells }
+  return statuses
 }
