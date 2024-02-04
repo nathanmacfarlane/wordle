@@ -2,7 +2,6 @@ import { endOfMonth, startOfMonth } from 'date-fns'
 import { User } from 'types/graphql'
 
 import { db } from 'src/lib/db'
-import { WHITELISTED_EMAILS } from 'src/utils/whitelistedEmails'
 
 export const buildLeaderboard = async (_date: string | Date) => {
   const som = startOfMonth(_date)
@@ -10,7 +9,7 @@ export const buildLeaderboard = async (_date: string | Date) => {
 
   const scores = await db.guess.findMany({
     where: {
-      user: { email: { in: WHITELISTED_EMAILS } },
+      user: { email: { startsWith: 'user_' } },
       solution: {
         date: { gte: som, lte: eom },
       },
