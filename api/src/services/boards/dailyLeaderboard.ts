@@ -1,6 +1,7 @@
 import { QueryResolvers } from 'types/graphql'
 
 import { db } from 'src/lib/db'
+import { WHITELISTED_EMAILS } from 'src/utils/whitelistedEmails'
 
 import { buildBoard } from './board'
 
@@ -10,6 +11,7 @@ export const dailyLeaderboard: QueryResolvers['dailyLeaderboard'] = async ({
   const [guesses, { word: solution }] = await Promise.all([
     db.guess.findMany({
       where: {
+        user: { email: { in: WHITELISTED_EMAILS } },
         solution: { date },
       },
       select: {
