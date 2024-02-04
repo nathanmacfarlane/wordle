@@ -10,7 +10,7 @@ export const dailyLeaderboard: QueryResolvers['dailyLeaderboard'] = async ({
   const [guesses, { word: solution }] = await Promise.all([
     db.guess.findMany({
       where: {
-        user: { email: { startsWith: 'user_' } },
+        user: { id: { startsWith: 'user_' } },
         solution: { date },
       },
       select: {

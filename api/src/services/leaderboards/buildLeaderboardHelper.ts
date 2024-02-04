@@ -9,7 +9,7 @@ export const buildLeaderboard = async (_date: string | Date) => {
 
   const scores = await db.guess.findMany({
     where: {
-      user: { email: { startsWith: 'user_' } },
+      user: { id: { startsWith: 'user_' } },
       solution: {
         date: { gte: som, lte: eom },
       },
