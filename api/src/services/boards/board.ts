@@ -27,6 +27,9 @@ export const board: QueryResolvers['board'] = async ({ date }) => {
         misplacedCount: true,
         incorrectCount: true,
       },
+      orderBy: {
+        nthGuess: 'asc',
+      },
     }),
     db.solution.findFirstOrThrow({
       where: {
